@@ -1,0 +1,1 @@
+Competent text-recognition in Tesseract OCR, boosted with large language model LLM prompting. Reads a folder with your documents and images, saves the text, cleans it with a model of choice and optionally answers questions about the contents.
