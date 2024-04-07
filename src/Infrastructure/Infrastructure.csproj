@@ -16,4 +16,12 @@
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <NativeLibs Remove="Repositories\FileRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="ConfigureServices.cs" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,4 @@
-namespace Application.Tests
+namespace Presentation.Console.Tests
 {
 	public class UnitTest1
 	{

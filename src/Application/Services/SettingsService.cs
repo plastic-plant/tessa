@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Tessa.Application.Interfaces;
+using Tessa.Application.Interface;
 using Tessa.Application.Models;
 
 namespace Tessa.Application.Services;
@@ -61,8 +61,17 @@ public class SettingsService : ISettingsService
 		return Settings;
 	}
 
-	public bool Save()
+	public bool Save(string settingsPath)
 	{
-		return false;
+		try
+		{
+			JsonSerializer.Serialize(settingsPath, _serializerOptions);
+			return true;
+		}
+		catch (Exception e)
+		{
+			Settings.Errors.Add($"Could not save settings to {settingsPath}: {e.Message}");
+			return false;
+		}
 	}
 }
