@@ -1,0 +1,24 @@
+{
+  "profiles": {
+    "tessa.exe": {
+      "commandName": "Project",
+      "commandLineArgs": ""
+    },
+    "tessa.exe config": {
+      "commandName": "Project",
+      "commandLineArgs": "config"
+    },
+    "tessa.exe ocr": {
+      "commandName": "Project",
+      "commandLineArgs": "ocr"
+    },
+    "tessa.exe ocr --help": {
+      "commandName": "Project",
+      "commandLineArgs": "ocr --help"
+    },
+    "tessa.exe ocr --in file.png --out file.txt": {
+      "commandName": "Project",
+      "commandLineArgs": "ocr --in file.png --out file.txt"
+    }
+  }
+}
