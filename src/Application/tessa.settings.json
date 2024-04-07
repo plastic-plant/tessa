@@ -1,0 +1,8 @@
+{
+  "ocr": {
+    "in": "../input",
+    "out": "../output",
+    "engine": "tesseract",
+    "lang": "eng+nld"
+  }
+}
