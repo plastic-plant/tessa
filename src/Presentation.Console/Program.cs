@@ -2,8 +2,8 @@
 using Spectre.Console.Cli;
 using Tessa.Application;
 using Tessa.Infrastructure;
-using Tessa.Presentation.Cli.Commands;
-using Tessa.Presentation.Cli.Configuration;
+using Tessa.Presentation.Console.Commands;
+using Tessa.Presentation.Console.Configuration;
 
 var services = new ServiceCollection();
 services.AddApplicationServices();

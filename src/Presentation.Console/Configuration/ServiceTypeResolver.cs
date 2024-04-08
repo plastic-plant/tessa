@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tessa.Presentation.Cli.Configuration;
+namespace Tessa.Presentation.Console.Configuration;
 
 public class ServiceTypeResolver : ITypeResolver, IDisposable
 {

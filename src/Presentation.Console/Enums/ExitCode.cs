@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Tessa.Presentation.Console.Enums;
 
-namespace Tessa.Presentation.Cli.Enums
+public enum ExitCode
 {
-	public enum ExitCode
-	{
-		OK = 0,
-		InvalidInputSettingsPath = 1,
-	}
+	OK = 0,
+	InvalidInputSettingsPath = 1,
 }
