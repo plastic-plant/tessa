@@ -6,6 +6,9 @@ using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
 using Tessa.Presentation.Console.Helpers;
 using Tessa.Presentation.Console.Enums;
+using System;
+using System.Diagnostics;
+using Tessa.Application.Events;
 
 namespace Tessa.Presentation.Console.Commands;
 
@@ -45,28 +48,11 @@ public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 
 	public override ValidationResult Validate(CommandContext context, Settings settings)
 	{
-		var appsettings = _settingsService
-			.LoadAppSettingsFromFile(settings.SettingsPath);
+		var appsettings = _settingsService.Load(settings.SettingsPath);
 
 		CommandHelpers.ApplySetting(appsettings.Ocr.InputPath, settings.InputPath, AppSettings.OcrSettings.Defaults.InputPath);
 		CommandHelpers.ApplySetting(appsettings.Ocr.OutputPath, settings.OutputPath, AppSettings.OcrSettings.Defaults.OutputPath);
 		CommandHelpers.ApplySetting(appsettings.Ocr.LanguageTessdata, settings.TessdataLanguage, AppSettings.OcrSettings.Defaults.TessdataLanguage);
-
-		//if (settings.InputPath != AppSettings.OcrSettings.Defaults.InputPath)
-		//{
-		//	appsettings.Ocr.InputPath = settings.InputPath;
-		//}
-
-		//if (settings.OutputPath != AppSettings.OcrSettings.Defaults.OutputPath)
-		//{
-		//	appsettings.Ocr.OutputPath = settings.OutputPath;
-		//}
-
-		//if (settings.TessdataLanguage != AppSettings.OcrSettings.Defaults.TessdataLanguage)
-		//{
-		//	appsettings.Ocr.LanguageTessdata = settings.LanguageTessdata;
-		//}
-
 
 		string[] errors = [.. appsettings.Errors, .. _ocrService.Validate().Errors];
 		if (errors.Count() > 0)
@@ -79,7 +65,14 @@ public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 
 	public override async Task<int> ExecuteAsync(CommandContext context, Settings settings)
 	{
+		_ocrService.ProgressChanged += ProgressChanged;
 		await _ocrService.Execute();
+		_ocrService.ProgressChanged -= ProgressChanged;
 		return (int)ExitCode.OK;
+	}
+
+	void ProgressChanged(object sender, ProgressEventArgs e)
+	{
+		System.Console.WriteLine($"Progress: {e.ProgressPercentage}% File {e.Summary.CurrentFilePosition}: {e.Summary.CurrentFile?.FileName}");
 	}
 }

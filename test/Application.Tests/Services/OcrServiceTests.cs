@@ -75,7 +75,7 @@ namespace Application.Tests.Services
 				.Returns(new AppSettings { Ocr = new AppSettings.OcrSettings { Engine = OcrEngine.Tesseract } });
 			files
 				.Setup(files => files.GetFilesSummary(It.IsAny<string>(), SearchOption.AllDirectories, FileOrder.Alphabetical))
-				.Returns(new List<FileSummary> { new FileSummary() });
+				.Returns(new SortedSet<FileSummary> { new FileSummary() });
 			services
 				.Setup(services => services.GetRequiredService<ITesseractRepository>())
 				.Returns(tesseract.Object);

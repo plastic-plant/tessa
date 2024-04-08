@@ -23,7 +23,7 @@ public class OcrCommandTests
 		var givenNoErrors = new List<string>();
 		var settingsService = new Mock<ISettingsService>();
 		settingsService
-			.Setup(settings => settings.LoadAppSettingsFromFile(It.IsAny<string>()))
+			.Setup(settings => settings.Load(It.IsAny<string>()))
 			.Returns(new AppSettings() { Errors = givenNoErrors });
 		var ocrService = new Mock<IOcrService>();
 		ocrService
@@ -44,7 +44,7 @@ public class OcrCommandTests
 		var givenSomeErrors = new List<string>() { "Some validation errors" };
 		var settingsService = new Mock<ISettingsService>();
 		settingsService
-			.Setup(settings => settings.LoadAppSettingsFromFile(It.IsAny<string>()))
+			.Setup(settings => settings.Load(It.IsAny<string>()))
 			.Returns(new AppSettings() { Errors = givenSomeErrors });
 		var ocrService = new Mock<IOcrService>();
 		ocrService

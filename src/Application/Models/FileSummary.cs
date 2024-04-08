@@ -1,6 +1,9 @@
-﻿namespace Tessa.Application.Models;
+﻿using System.Numerics;
+using Tessa.Application.Enums;
 
-public class FileSummary
+namespace Tessa.Application.Models;
+
+public class FileSummary: FileSummaryComparer
 {
 	/// <summary>
 	/// The original path provided by the user. Can be a full path, a relative path or an incorrect path.
@@ -17,4 +20,13 @@ public class FileSummary
 	public bool IsImage { get; set; }
 	public float Confidence { get; set; }
 	public string? FilePathResult { get; set; }
+    public OcrProcessingStatus OcrProcessingStatus { get; set; }
+}
+
+public class FileSummaryComparer : IComparer<FileSummary>
+{
+	public int Compare(FileSummary a, FileSummary b)
+	{
+		return (a.FilePathRooted ?? "").CompareTo(b.FilePathRooted);
+	}
 }

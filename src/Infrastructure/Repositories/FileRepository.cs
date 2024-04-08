@@ -20,14 +20,18 @@ namespace Tessa.Infrastructure.Repositories
 			return summary;
 		}
 
-		public IEnumerable<FileSummary> GetFilesSummary(string path, SearchOption search = SearchOption.AllDirectories, FileOrder order = FileOrder.Alphabetical)
+		/// <summary>
+		/// Gets a summary of files in given path. Path can be a directory or a single file.
+		/// By default orders alphabatically and searches subdirectories.
+		/// </summary>
+		public SortedSet<FileSummary> GetFilesSummary(string path, SearchOption search = SearchOption.AllDirectories, FileOrder order = FileOrder.Alphabetical)
 		{
-			var list = new List<FileSummary>();
-			var imageExtensions = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff" };
+			var list = new SortedSet<FileSummary>();			
 
 			var summary = GetPathSummary(path);
 			if (summary.IsExistingDirectory)
 			{
+				// Input path is a directory, let's gobble glob and sort.
 				string[] filenames = Directory.GetFiles(summary.PathRooted!, "*.*", search);
 				var ordered = order switch
 				{
@@ -41,28 +45,28 @@ namespace Tessa.Infrastructure.Repositories
 					_ => filenames.ToList()
 				};
 
-
-				list.AddRange(ordered.Select(filename => new FileSummary()
-				{
-					FilePathRooted = filename,
-					FileName = Path.GetFileName(filename),
-					FileNameExtension = Path.GetExtension(filename),
-					FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filename),
-					IsImage = imageExtensions.Contains(Path.GetExtension(filename))
-				}));
+				ordered.ForEach(filename => list.Add(AsFileSummary(filename)));
 			}
 			else
 			{
-				list.Add(new FileSummary()
-				{
-					FilePathRooted = summary.PathRooted,
-					FileName = Path.GetFileName(summary.PathRooted),
-					FileNameExtension = Path.GetExtension(summary.PathRooted),
-					FileNameWithoutExtension = Path.GetFileName(summary.PathRooted),
-					IsImage = imageExtensions.Contains(Path.GetExtension(summary.PathRooted))
-				});
+				// Input path is a single file.
+				list.Add(AsFileSummary(summary.PathRooted!));
 			}
+
 			return list;
+		}
+
+		private static FileSummary AsFileSummary(string filePathRooted)
+		{
+			var imageExtensions = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff" };
+			return new FileSummary()
+			{
+				FilePathRooted = filePathRooted,
+				FileName = Path.GetFileName(filePathRooted),
+				FileNameExtension = Path.GetExtension(filePathRooted),
+				FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePathRooted),
+				IsImage = imageExtensions.Contains(Path.GetExtension(filePathRooted))
+			};
 		}
 	}
 }

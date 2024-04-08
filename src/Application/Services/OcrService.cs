@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.ComponentModel;
 using Tessa.Application.Enums;
+using Tessa.Application.Events;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
@@ -20,6 +23,8 @@ public class OcrService: IOcrService
 		_settings = settings?.Settings?.Ocr ?? throw new ArgumentNullException(nameof(settings));
 		_files = files ?? throw new ArgumentNullException(nameof(files));
 	}
+
+	public event ProgressEventHandler? ProgressChanged;
 
 	public OcrSummary Validate()
 	{
@@ -48,16 +53,30 @@ public class OcrService: IOcrService
 
 	public async Task<OcrSummary> Execute()
 	{
-		await Task.Delay(1000);
-		var files = _files.GetFilesSummary(_settings.InputPath);
+		var summary = new OcrSummary();
+		summary.Files = _files.GetFilesSummary(_settings.InputPath);
 
 		switch (_settings.Engine)
 		{
 			case OcrEngine.Tesseract:
 				_tesseract = _tesseract ?? _services.GetRequiredService<ITesseractRepository>();
-				foreach (var file in files)
+				
+				int position = 0;
+				foreach (var file in summary.Files)
 				{
+					summary.CurrentFile = file;
+					summary.CurrentFilePosition = ++position;
+					
+					file.OcrProcessingStatus = OcrProcessingStatus.Processing;
+					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
+
+					file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
+					await Task.Delay(2000);
+					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
+
+					file.OcrProcessingStatus = OcrProcessingStatus.Finished;
 					_tesseract.Process(file);
+					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 				}
 				break;
 

@@ -26,4 +26,26 @@
     <NativeLibs Remove="ConfigureServices.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <NativeLibs Remove="input\pagina-00028.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="input\pagina-00028.png" />
+    <None Remove="output\_empty.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="input\pagina-00028.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="output\_empty.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <NativeLibs Remove="output\_empty.txt" />
+  </ItemGroup>
+
 </Project>

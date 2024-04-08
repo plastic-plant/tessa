@@ -19,7 +19,7 @@ public class SettingsService : ISettingsService
 		ReadCommentHandling = JsonCommentHandling.Skip,
 	};
 
-	public AppSettings LoadAppSettingsFromFile(string? settingsPath = null)
+	public AppSettings Load(string? settingsPath = null)
 	{
 		var filename = settingsPath ?? Settings.SettingsPath;
 		try

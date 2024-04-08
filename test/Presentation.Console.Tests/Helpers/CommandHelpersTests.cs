@@ -11,15 +11,33 @@ namespace Application.Tests.Helpers
 	public class CommandHelpersTests
 	{
 		[Fact]
-		public void ApplySetting_WhenNewValueIsDifferentFromDefaultValue_UpdatesOriginalValue()
+		public void ApplySetting_WhenNewValueIsDifferentFromDefaultValue_UpdatesOriginalValueByReference()
 		{
 			var originalValue = "original";
 			var newValue = "new";
 			var defaultValue = "default";
 
-			CommandHelpers.ApplySetting(originalValue, newValue, defaultValue);
+			CommandHelpers.ApplySetting(ref originalValue, newValue, defaultValue);
 
 			Assert.Equal(newValue, originalValue);
+		}
+
+		[Fact]
+		public void ApplySetting_WhenNewValueIsDifferentFromDefaultValue_UpdatesOriginalPropertyWithoutReference()
+		{
+			var originalValue = new AppSettings()
+			{
+				Ocr = new AppSettings.OcrSettings()
+				{
+					InputPath = "original"
+				}
+			};
+			var newValue = "new";
+			var defaultValue = "default";
+
+			CommandHelpers.ApplySetting(originalValue.Ocr.InputPath, newValue, defaultValue);
+
+			Assert.Equal(newValue, originalValue.Ocr.InputPath);
 		}
 
 		[Theory]

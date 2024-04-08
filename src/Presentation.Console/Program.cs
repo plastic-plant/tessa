@@ -26,5 +26,4 @@ app.Configure(config =>
 		.WithExample("ocr", "--help");
 });
 
-
 return await app.RunAsync(args);

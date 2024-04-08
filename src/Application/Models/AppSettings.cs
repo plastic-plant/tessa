@@ -21,8 +21,8 @@ public class AppSettings
 	{
 		public class Defaults
 		{
-			public const string InputPath = "../input";
-			public const string OutputPath = "../output";
+			public const string InputPath = "input";
+			public const string OutputPath = "output";
 			public const OcrEngine Engine = OcrEngine.Tesseract;
 			public const string TessdataLanguage = "eng";
 		}
