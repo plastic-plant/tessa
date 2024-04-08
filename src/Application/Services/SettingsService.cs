@@ -42,7 +42,7 @@ public class SettingsService : ISettingsService
 			{
 				
 				var example = JsonSerializer.Serialize(Settings, _serializerOptions);
-				Settings.Errors.Add($"Could not load settings from {filename}. Please run tessa config to create a new tessa.config.json");
+				Settings.Errors.Add($"Could not load settings from {filename}. Please run tessa config to create a new tessa.config.json.");
 			}
 		}
 		catch (ArgumentException)

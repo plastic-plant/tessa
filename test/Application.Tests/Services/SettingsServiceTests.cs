@@ -36,25 +36,29 @@ namespace Application.Tests.Services
 		[Fact]
 		public void LoadAppSettingsFromFile_NotFound_Throws()
 		{
-			var settingsService = new SettingsService();
+			var expectedError = "Could not load settings from [fullpath] not.existing.settings.json. Please run tessa config to create a new tessa.config.json.";
+			
 			var notExistingFile = "not.existing.settings.json";
+			var sut = new SettingsService();
 
-			Action action = () => settingsService.Load(notExistingFile);
+			sut.Load(notExistingFile);
 
-			Assert.Throws<ArgumentException>(action);
+			Assert.EndsWith(expectedError.Substring(expectedError.Length - 58), sut.Settings.Errors.First());
 		}
 
 		[Fact]
 		public void LoadAppSettingsFromFile_InvalidJson_Throws()
 		{
-			var settingsService = new SettingsService();
-			var invalidJson = "{ \"ocr\": { \"input\": \"input\", \"output\": \"output\", \"engine\": \"tesseract\", \"lang\": \"eng\" } }";
-			var invalidFileName = "invalid.settings.json";
-			File.WriteAllText(invalidFileName, invalidJson);
+			var expectedError = "Could not load settings from [fullpath] invalid.settings.json. There's an error in the formatting of the JSON content. Please run tessa config to fix.";
+			var invalidJson = "{ this is invalid json }";
+			var filename = "invalid.settings.json";
+			File.WriteAllText(filename, invalidJson);
+			var sut = new SettingsService();
 
-			Action action = () => settingsService.Load(invalidFileName);
+			sut.Load(filename);
 
-			Assert.Throws<JsonException>(action);
+			Assert.StartsWith(expectedError.Substring(0, 29), sut.Settings.Errors.First());
+			Assert.EndsWith(expectedError.Substring(expectedError.Length - 88), sut.Settings.Errors.First());
 		}
 	}
 }

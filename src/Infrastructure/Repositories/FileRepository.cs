@@ -16,7 +16,6 @@ namespace Tessa.Infrastructure.Repositories
 
 			summary.IsExistingDirectory = Directory.Exists(summary.PathRooted);
 			summary.IsExistingFile = File.Exists(summary.PathRooted);
-			//summary.DirectoryFilesCount = summary.IsExistingDirectory ? Directory.GetFiles(summary.PathRooted).Length : 0;
 			return summary;
 		}
 
@@ -24,9 +23,9 @@ namespace Tessa.Infrastructure.Repositories
 		/// Gets a summary of files in given path. Path can be a directory or a single file.
 		/// By default orders alphabatically and searches subdirectories.
 		/// </summary>
-		public SortedSet<FileSummary> GetFilesSummary(string path, SearchOption search = SearchOption.AllDirectories, FileOrder order = FileOrder.Alphabetical)
+		public List<FileSummary> GetFilesSummary(string path, SearchOption search = SearchOption.AllDirectories, FileOrder order = FileOrder.Alphabetical)
 		{
-			var list = new SortedSet<FileSummary>();			
+			var list = new List<FileSummary>();			
 
 			var summary = GetPathSummary(path);
 			if (summary.IsExistingDirectory)
@@ -45,28 +44,15 @@ namespace Tessa.Infrastructure.Repositories
 					_ => filenames.ToList()
 				};
 
-				ordered.ForEach(filename => list.Add(AsFileSummary(filename)));
+				ordered.ForEach(filename => list.Add(FileSummary.From(filename)));
 			}
 			else
 			{
 				// Input path is a single file.
-				list.Add(AsFileSummary(summary.PathRooted!));
+				list.Add(FileSummary.From(summary.PathRooted!));
 			}
 
 			return list;
-		}
-
-		private static FileSummary AsFileSummary(string filePathRooted)
-		{
-			var imageExtensions = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff" };
-			return new FileSummary()
-			{
-				FilePathRooted = filePathRooted,
-				FileName = Path.GetFileName(filePathRooted),
-				FileNameExtension = Path.GetExtension(filePathRooted),
-				FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePathRooted),
-				IsImage = imageExtensions.Contains(Path.GetExtension(filePathRooted))
-			};
 		}
 	}
 }

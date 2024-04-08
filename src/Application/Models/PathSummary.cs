@@ -14,5 +14,4 @@ public class PathSummary
 
 	public bool IsExistingDirectory { get; set; }
 	public bool IsExistingFile { get; set; }
-	//public int DirectoryFilesCount { get; set; }
 }

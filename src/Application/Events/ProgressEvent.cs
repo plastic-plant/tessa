@@ -19,7 +19,8 @@ public class ProgressEventArgs : EventArgs
 	private int GetProgressPercentage(OcrSummary summary)
 	{
 		int correctForProcessingState = OcrProcessingStatus.Finished == summary.CurrentFile?.OcrProcessingStatus ? 0 : -1;
-		double percentage = ((double)Summary.CurrentFilePosition + correctForProcessingState / (double)Summary.Files.Count);
+		int currentPosition = Summary.CurrentFilePosition + correctForProcessingState;
+		double percentage = (double)currentPosition / (double)Summary.Files.Count;
 		return (int)Math.Ceiling(percentage * 100);
 	}
 }
