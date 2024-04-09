@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using Moq;
 using Spectre.Console.Cli;
 using Tessa.Application.Interface;
@@ -18,9 +19,10 @@ public class OcrCommandTests
 	};
 
 	[Fact]
-        public void Validate_WithoutErrors_Returns()
-        {
+    public void Validate_WithoutErrors_Returns()
+    {
 		var givenNoErrors = new List<string>();
+		var logger = new Mock<ILogger<OcrCommand>>();
 		var settingsService = new Mock<ISettingsService>();
 		settingsService
 			.Setup(settings => settings.Load(It.IsAny<string>()))
@@ -29,7 +31,7 @@ public class OcrCommandTests
 		ocrService
 			.Setup(ocr => ocr.Validate())
 			.Returns(new OcrSummary() { Errors = givenNoErrors });
-		var command = new OcrCommand(settingsService.Object, ocrService.Object);
+		var command = new OcrCommand(logger.Object, settingsService.Object, ocrService.Object);
 		var remaining = new Mock<IRemainingArguments>();
 		var context = new CommandContext(remaining.Object, "ocr", null);
 
@@ -42,6 +44,9 @@ public class OcrCommandTests
 	public void Validate_WithErrors_Returns()
 	{
 		var givenSomeErrors = new List<string>() { "Some validation errors" };
+		var logger = new Mock<ILogger<OcrCommand>>();
+		logger
+			.Setup(logger => logger.Log(LogLevel.Error, It.IsAny<EventId>(), It.IsAny<object>(), It.IsAny<Exception>(), It.IsAny<Func<object, Exception?, string>>()));
 		var settingsService = new Mock<ISettingsService>();
 		settingsService
 			.Setup(settings => settings.Load(It.IsAny<string>()))
@@ -50,13 +55,21 @@ public class OcrCommandTests
 		ocrService
 			.Setup(ocr => ocr.Validate())
 			.Returns(new OcrSummary() { Errors = givenSomeErrors });
-		var command = new OcrCommand(settingsService.Object, ocrService.Object);
+		var command = new OcrCommand(logger.Object, settingsService.Object, ocrService.Object);
 		var remaining = new Mock<IRemainingArguments>();
 		var context = new CommandContext(remaining.Object, "ocr", null);
 
 		var actual = command.Validate(context, _defaultSettings);
 
 		Assert.False(actual.Successful);
+		logger.Verify(
+			action => action.Log(
+				It.Is<LogLevel>(level => level == LogLevel.Error),
+				It.IsAny<EventId>(),
+				It.Is<It.IsAnyType>((message, type) => message.ToString()!.Contains(givenSomeErrors.First())),
+				It.IsAny<Exception>(),
+				It.Is<Func<It.IsAnyType, Exception?, string>>((formatter, type) => true)),
+			Times.Once);
 	}
 
 }

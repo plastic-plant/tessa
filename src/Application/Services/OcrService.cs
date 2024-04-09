@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.ComponentModel;
+using Microsoft.Extensions.Logging;
 using Tessa.Application.Enums;
 using Tessa.Application.Events;
 using Tessa.Application.Interface;
@@ -11,14 +10,16 @@ namespace Tessa.Application.Services;
 
 public class OcrService: IOcrService
 {
+	private readonly ILogger<OcrService> _logger;
 	private readonly IServiceProvider _services;
 	private readonly AppSettings.OcrSettings _settings;
 	private readonly IFileRepository _files;
 
 	private ITesseractRepository? _tesseract;
 
-	public OcrService(IServiceProvider services, ISettingsService settings, IFileRepository files)
+	public OcrService(ILogger<OcrService> logger, IServiceProvider services, ISettingsService settings, IFileRepository files)
     {
+		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		_services = services ?? throw new ArgumentNullException(nameof(services));
 		_settings = settings?.Settings?.Ocr ?? throw new ArgumentNullException(nameof(settings));
 		_files = files ?? throw new ArgumentNullException(nameof(files));
@@ -64,12 +65,14 @@ public class OcrService: IOcrService
 				int position = 0;
 				foreach (var file in summary.Files)
 				{
+					_logger.LogInformation($"Processing file {position} with Tesseract.", file.FileName);
 					summary.CurrentFile = file;
 					summary.CurrentFilePosition = ++position;
 					
 					file.OcrProcessingStatus = OcrProcessingStatus.Processing;
 					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 
+					_logger.LogInformation($"Optimizing file {file.FileName} with LLM prompting.");
 					file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
 					await Task.Delay(2000);
 					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
@@ -77,6 +80,7 @@ public class OcrService: IOcrService
 					file.OcrProcessingStatus = OcrProcessingStatus.Finished;
 					_tesseract.Process(file);
 					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
+					_logger.LogInformation($"Finished processing file.");
 				}
 				break;
 

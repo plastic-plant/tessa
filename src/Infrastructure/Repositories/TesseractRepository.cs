@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime;
@@ -13,12 +14,14 @@ namespace Tessa.Infrastructure.Tesseract;
 
 public class TesseractRepository : ITesseractRepository
 {
+	private readonly ILogger<TesseractRepository> _logger;
 	private readonly IServiceProvider _services;
 	private readonly AppSettings.OcrSettings _settings;
 	private TesseractEngine? _engine;
 
-	public TesseractRepository(IServiceProvider services, ISettingsService settings)
+	public TesseractRepository(ILogger<TesseractRepository> logger, IServiceProvider services, ISettingsService settings)
 	{
+		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		_services = services ?? throw new ArgumentNullException(nameof(services));
 		_settings = settings?.Settings?.Ocr ?? throw new ArgumentNullException(nameof(settings));
 	}
@@ -47,7 +50,7 @@ public class TesseractRepository : ITesseractRepository
 			file.FilePathResult = Path.Combine(_settings.OutputPath, $"{file.FileNameWithoutExtension!}.tesseract.txt");
 			file.Confidence = page.GetMeanConfidence();
 			File.WriteAllText(file.FilePathResult, text);
-
+			_logger.LogDebug($"Tesseract processed {file.FileName} with confidence {file.Confidence}");
 			// status and error handling, skip-message
 		}
 		return file;

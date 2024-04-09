@@ -7,9 +7,11 @@ namespace Tessa.Application;
 
 public static class ConfigureServices
 {
-    public static void AddApplicationServices(this IServiceCollection services)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
     {
         services.AddSingleton<IOcrService, OcrService>();
-        services.AddSingleton<ISettingsService, SettingsService>();		
+        services.AddSingleton<ISettingsService, SettingsService>();
+
+        return services;
 	}
 }

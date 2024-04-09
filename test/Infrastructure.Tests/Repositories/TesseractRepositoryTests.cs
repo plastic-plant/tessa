@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.Reflection;
 using Tessa.Application.Interface;
@@ -15,11 +16,12 @@ public class TesseractRepositoryTests
 	{
 		var appSettings = new AppSettings();
 		appSettings.Ocr.OutputPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!);
+		var logger = new Mock<ILogger<TesseractRepository>>();
 		var services = new ServiceCollection();
 		var provider = services.BuildServiceProvider();
 		var settings = new Mock<ISettingsService>();
 		settings.Setup(settings => settings.Settings).Returns(appSettings);
-		var repository = new TesseractRepository(provider, settings.Object);
+		var repository = new TesseractRepository(logger.Object, provider, settings.Object);
 		var file = new FileSummary()
 		{
 			FilePathRooted = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!, "Examples", "example2.jpeg"),

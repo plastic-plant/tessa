@@ -8,6 +8,7 @@ public class AppSettings
 	public class Defaults
 	{
 		public const string SettingsPath = "tessa.settings.json";
+		public const string LogPath = "logs";
 	}
 	
 	[JsonIgnore]
@@ -16,8 +17,11 @@ public class AppSettings
 	[JsonIgnore]
 	public string SettingsPath { get; set; } = Defaults.SettingsPath;
 
+	[JsonPropertyName("log")]
+	public string LogPath { get; set; } = Defaults.LogPath;
+
 	public OcrSettings Ocr { get; set; } = new();
-        public class OcrSettings
+    public class OcrSettings
 	{
 		public class Defaults
 		{

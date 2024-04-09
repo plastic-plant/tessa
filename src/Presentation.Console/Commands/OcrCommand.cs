@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using Microsoft.Extensions.Logging;
+using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
 using Tessa.Application.Events;
@@ -11,10 +12,11 @@ namespace Tessa.Presentation.Console.Commands;
 
 public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 {
+	private readonly ILogger<OcrCommand> _logger;
 	private readonly ISettingsService _settingsService;
 	private readonly IOcrService _ocrService;
 
-	public sealed class Settings : CommandSettings
+	public sealed class Settings : LogCommandSettings
 	{
 		[CommandOption("--settings <filename>")]
 		[Description($"Use an alternative settings file")]
@@ -37,8 +39,9 @@ public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 		public required string TessdataLanguage { get; set; }
 	}
 
-	public OcrCommand(ISettingsService settingsService, IOcrService ocrService)
+	public OcrCommand(ILogger<OcrCommand> logger, ISettingsService settingsService, IOcrService ocrService)
 	{
+		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		_settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
 		_ocrService = ocrService ?? throw new ArgumentNullException(nameof(ocrService));
 	}
@@ -54,7 +57,9 @@ public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 		string[] errors = [.. appsettings.Errors, .. _ocrService.Validate().Errors];
 		if (errors.Count() > 0)
 		{
-			return ValidationResult.Error(string.Join(" ", errors));
+			var message = string.Join(" ", errors);
+			_logger.LogError(message);
+			return ValidationResult.Error(message);
 		}
 
 		return base.Validate(context, settings);

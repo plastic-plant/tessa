@@ -2,13 +2,14 @@
 using Spectre.Console.Cli;
 using Tessa.Application;
 using Tessa.Infrastructure;
+using Tessa.Presentation.Console;
 using Tessa.Presentation.Console.Commands;
 using Tessa.Presentation.Console.Configuration;
 
-var services = new ServiceCollection();
-services.AddApplicationServices();
-services.AddInfrastructureServices();
-
+var services = new ServiceCollection()
+	.AddPresentationConsoleServices()
+	.AddApplicationServices()
+	.AddInfrastructureServices();
 
 var registrar = new ServiceTypeRegistrar(services);
 var app = new CommandApp(registrar);
@@ -16,6 +17,7 @@ var app = new CommandApp(registrar);
 app.Configure(config =>
 {
 	config.SetApplicationName("tessa");
+	// config.SetInterceptor(new LogInterceptor());
 	config
 		.AddCommand<OcrCommand>("ocr")
 		.WithExample("ocr")
