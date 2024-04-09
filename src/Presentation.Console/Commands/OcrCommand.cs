@@ -1,14 +1,11 @@
 ﻿using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
+using Tessa.Application.Events;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
-using Tessa.Presentation.Console.Helpers;
 using Tessa.Presentation.Console.Enums;
-using System;
-using System.Diagnostics;
-using Tessa.Application.Events;
 
 namespace Tessa.Presentation.Console.Commands;
 
@@ -50,9 +47,9 @@ public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 	{
 		var appsettings = _settingsService.Load(settings.SettingsPath);
 
-		CommandHelpers.ApplySetting(appsettings.Ocr.InputPath, settings.InputPath, AppSettings.OcrSettings.Defaults.InputPath);
-		CommandHelpers.ApplySetting(appsettings.Ocr.OutputPath, settings.OutputPath, AppSettings.OcrSettings.Defaults.OutputPath);
-		CommandHelpers.ApplySetting(appsettings.Ocr.LanguageTessdata, settings.TessdataLanguage, AppSettings.OcrSettings.Defaults.TessdataLanguage);
+		if (settings.InputPath != AppSettings.OcrSettings.Defaults.InputPath) appsettings.Ocr.InputPath = settings.InputPath;
+		if (settings.OutputPath != AppSettings.OcrSettings.Defaults.OutputPath) appsettings.Ocr.OutputPath = settings.OutputPath;
+		if (settings.TessdataLanguage != AppSettings.OcrSettings.Defaults.TessdataLanguage) appsettings.Ocr.LanguageTessdata = settings.TessdataLanguage;
 
 		string[] errors = [.. appsettings.Errors, .. _ocrService.Validate().Errors];
 		if (errors.Count() > 0)
