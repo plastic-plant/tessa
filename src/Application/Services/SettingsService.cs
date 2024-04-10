@@ -34,14 +34,12 @@ public class SettingsService : ISettingsService
 				var content = File.ReadAllText(filename);
 				if (!string.IsNullOrWhiteSpace(content))
 				{
-					Settings = JsonSerializer.Deserialize<AppSettings>(content)!;
+					Settings = JsonSerializer.Deserialize<AppSettings>(content, _serializerOptions)!;
 					Settings.SettingsPath = filename;
 				}
 			}
 			else
 			{
-				
-				var example = JsonSerializer.Serialize(Settings, _serializerOptions);
 				Settings.Errors.Add($"Could not load settings from {filename}. Please run tessa config to create a new tessa.config.json.");
 			}
 		}
@@ -49,9 +47,9 @@ public class SettingsService : ISettingsService
 		{
 			Settings.Errors.Add($"Could not load settings from {filename}. The file name was matched with {AppDomain.CurrentDomain.BaseDirectory} but not found.");
 		}
-		catch (JsonException)
+		catch (JsonException e)
 		{
-			Settings.Errors.Add($"Could not load settings from {filename}. There's an error in the formatting of the JSON content. Please run tessa config to fix.");
+			Settings.Errors.Add($"Could not load settings from {filename}. There's an error in the formatting of the JSON content. Please run tessa config to fix. {e.Message}");
 		}
 		catch (Exception)
 		{
@@ -65,7 +63,8 @@ public class SettingsService : ISettingsService
 	{
 		try
 		{
-			JsonSerializer.Serialize(settingsPath, _serializerOptions);
+			var json = JsonSerializer.Serialize(Settings, _serializerOptions);
+			File.WriteAllText(settingsPath, json);
 			return true;
 		}
 		catch (Exception e)

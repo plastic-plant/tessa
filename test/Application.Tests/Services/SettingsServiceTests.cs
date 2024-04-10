@@ -18,7 +18,7 @@ namespace Application.Tests.Services
 					InputPath = "input",
 					OutputPath = "output",
 					Engine = OcrEngine.Tesseract,
-					LanguageTessdata = "eng"
+					TessdataLanguage = "eng"
 				}
 			};
 			var json = JsonSerializer.Serialize(settings);
@@ -30,7 +30,7 @@ namespace Application.Tests.Services
 			Assert.Equal(settings.Ocr.InputPath, service.Settings.Ocr.InputPath);
 			Assert.Equal(settings.Ocr.OutputPath, service.Settings.Ocr.OutputPath);
 			Assert.Equal(settings.Ocr.Engine, service.Settings.Ocr.Engine);
-			Assert.Equal(settings.Ocr.LanguageTessdata, service.Settings.Ocr.LanguageTessdata);
+			Assert.Equal(settings.Ocr.TessdataLanguage, service.Settings.Ocr.TessdataLanguage);
 		}
 
 		[Fact]

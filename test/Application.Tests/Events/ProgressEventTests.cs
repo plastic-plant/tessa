@@ -14,6 +14,19 @@ public class ProgressEventTests
 	[InlineData(50, 100, OcrProcessingStatus.Finished, 50)]
 	[InlineData(100, 100, OcrProcessingStatus.None, 99)]
 	[InlineData(100, 100, OcrProcessingStatus.Finished, 100)]
+	[InlineData(1, 2, OcrProcessingStatus.None, 0)]
+	[InlineData(1, 2, OcrProcessingStatus.Processing, 0)]
+	[InlineData(1, 2, OcrProcessingStatus.Optimizing, 25)]
+	[InlineData(1, 2, OcrProcessingStatus.Finished, 50)]
+	[InlineData(1, 2, OcrProcessingStatus.Failed, 50)]
+	[InlineData(1, 2, OcrProcessingStatus.Skipped, 50)]
+	[InlineData(2, 2, OcrProcessingStatus.None, 50)]
+	[InlineData(2, 2, OcrProcessingStatus.Processing, 50)]
+	[InlineData(2, 2, OcrProcessingStatus.Optimizing, 75)]
+	[InlineData(2, 2, OcrProcessingStatus.Finished, 100)]
+	[InlineData(2, 2, OcrProcessingStatus.Failed, 100)]
+	[InlineData(2, 2, OcrProcessingStatus.Skipped, 100)]
+
 	public void ProgressEvent_ProgressPercentage(int currentItem, int totalItems, OcrProcessingStatus status, int expectedPercentage)
 	{
 		var summary = new OcrSummary()

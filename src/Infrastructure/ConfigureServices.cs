@@ -10,8 +10,9 @@ public static class ConfigureServices
 {
 	public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
 	{
-		services.AddSingleton<ITesseractRepository, TesseractRepository>();
 		services.AddSingleton<IFileRepository, FileRepository>();
+		services.AddSingleton<ILlamaRepository, LlamaRepository>();
+		services.AddSingleton<ITesseractRepository, TesseractRepository>();
 
 		return services;
 	}

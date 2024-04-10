@@ -6,6 +6,7 @@ using Tessa.Application.Events;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
+using Tessa.Application.Services;
 using Tessa.Presentation.Console.Enums;
 
 namespace Tessa.Presentation.Console.Commands;
@@ -52,7 +53,7 @@ public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 
 		if (settings.InputPath != AppSettings.OcrSettings.Defaults.InputPath) appsettings.Ocr.InputPath = settings.InputPath;
 		if (settings.OutputPath != AppSettings.OcrSettings.Defaults.OutputPath) appsettings.Ocr.OutputPath = settings.OutputPath;
-		if (settings.TessdataLanguage != AppSettings.OcrSettings.Defaults.TessdataLanguage) appsettings.Ocr.LanguageTessdata = settings.TessdataLanguage;
+		if (settings.TessdataLanguage != AppSettings.OcrSettings.Defaults.TessdataLanguage) appsettings.Ocr.TessdataLanguage = settings.TessdataLanguage;
 
 		string[] errors = [.. appsettings.Errors, .. _ocrService.Validate().Errors];
 		if (errors.Count() > 0)

@@ -18,8 +18,9 @@ public class FileSummary
     public string? FileNameExtension { get; set; }
 	public bool IsImage { get; set; }
 	public float Confidence { get; set; }
-	public string? FilePathResult { get; set; }
-    public OcrProcessingStatus OcrProcessingStatus { get; set; }
+	public string? FilePathResultOcr { get; set; }
+	public string? FilePathResultLlm { get; set; }
+	public OcrProcessingStatus OcrProcessingStatus { get; set; }
 
 	public static FileSummary From(string filePathRooted)
 	{

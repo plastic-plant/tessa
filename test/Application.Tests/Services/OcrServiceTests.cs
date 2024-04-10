@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Tessa.Application.Enums;
 using Tessa.Application.Interface;
@@ -13,6 +14,7 @@ namespace Application.Tests.Services
 		[Fact]
 		public void Validate_WhenInputPathIsNotExisting_Error()
 		{
+			var logger = new Mock<ILogger<OcrService>>();
 			var services = new Mock<IServiceProvider>();
 			var settings = new Mock<ISettingsService>();
 			var files = new Mock<IFileRepository>();
@@ -22,7 +24,7 @@ namespace Application.Tests.Services
 			files
 				.Setup(files => files.GetPathSummary("path"))
 				.Returns(new PathSummary { PathRooted = "//example", IsExistingDirectory = false, IsExistingFile = false });
-			var sut = new OcrService(services.Object, settings.Object, files.Object);
+			var sut = new OcrService(logger.Object, services.Object, settings.Object, files.Object);
 
 			var actual = sut.Validate();
 
@@ -33,6 +35,7 @@ namespace Application.Tests.Services
 		[Fact]
 		public void Validate_WhenEngineIsTesseractAndRepositoryIsNotReady_Error()
 		{
+			var logger = new Mock<ILogger<OcrService>>();
 			var settings = new Mock<ISettingsService>();
 			var files = new Mock<IFileRepository>();
 			var tesseract = new Mock<ITesseractRepository>();			
@@ -48,7 +51,7 @@ namespace Application.Tests.Services
 			var services = new ServiceCollection();
 			services.AddSingleton(tesseract.Object);
 			var provider = services.BuildServiceProvider();
-			var sut = new OcrService(provider, settings.Object, files.Object);
+			var sut = new OcrService(logger.Object, provider, settings.Object, files.Object);
 
 			var actual = sut.Validate();
 
@@ -59,7 +62,7 @@ namespace Application.Tests.Services
 		[Fact]
 		public async Task Execute_WhenEngineIsTesseract_ProcessFiles()
 		{
-			
+			var logger = new Mock<ILogger<OcrService>>();
 			var settings = new Mock<ISettingsService>();
 			var files = new Mock<IFileRepository>();
 			var tesseract = new Mock<ITesseractRepository>();			
@@ -72,7 +75,7 @@ namespace Application.Tests.Services
 			var services = new ServiceCollection();
 			services.AddSingleton<ITesseractRepository>(tesseract.Object);
 			var provider = services.BuildServiceProvider();
-			var sut = new OcrService(provider, settings.Object, files.Object);
+			var sut = new OcrService(logger.Object, provider, settings.Object, files.Object);
 
 			// Act
 			await sut.Execute();

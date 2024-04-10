@@ -30,7 +30,7 @@ public class TesseractRepository : ITesseractRepository
 	{
 		try
 		{
-			_engine = _engine = new TesseractEngine(@"./tessdata", _settings.LanguageTessdata);
+			_engine = _engine = new TesseractEngine(@"./tessdata", _settings.TessdataLanguage);
 			return (_engine?.Version, null);
 		}
 		catch (Exception ex)
@@ -41,17 +41,17 @@ public class TesseractRepository : ITesseractRepository
 
 	public FileSummary Process(FileSummary file)
 	{
-		_engine = _engine ?? new TesseractEngine(@"./tessdata", _settings.LanguageTessdata);
+		_engine = _engine ?? new TesseractEngine(@"./tessdata", _settings.TessdataLanguage);
 		if (file.IsImage)
 		{
 			using var image = Pix.LoadFromFile(file.FilePathRooted);
 			using var page = _engine.Process(image);
 			var text = page.GetText();
-			file.FilePathResult = Path.Combine(_settings.OutputPath, $"{file.FileNameWithoutExtension!}.tesseract.txt");
+			file.FilePathResultOcr = Path.Combine(_settings.OutputPath, $"{file.FileNameWithoutExtension!}.orc.txt");
 			file.Confidence = page.GetMeanConfidence();
-			File.WriteAllText(file.FilePathResult, text);
+			File.WriteAllText(file.FilePathResultOcr, text);
 			_logger.LogDebug($"Tesseract processed {file.FileName} with confidence {file.Confidence}");
-			// status and error handling, skip-message
+			// TODO: status and error handling, skip-message
 		}
 		return file;
 	}
