@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using iText.Kernel.Pdf;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using iText.Kernel.Pdf.Canvas.Parser;
+using iText.Pdfa;
+using Microsoft.Extensions.Logging;
+using System.Text;
 using Tessa.Application.Enums;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
@@ -49,18 +54,36 @@ public class TesseractRepository : ITesseractRepository
 		try
 		{
 			using var engine = new TesseractEngine(_settings.TessdataPath, _settings.TessdataLanguage, EngineMode.LstmOnly);
+			var text = new StringBuilder();
 
 			// Process image file.
 			if (file.IsImage)
 			{
 				using var image = Pix.LoadFromFile(file.FilePathRooted);
-				using var page = engine.Process(image);
-				var text = page.GetText();
-				file.FilePathResultOcr = Path.Combine(_settings.OutputPath, $"{file.FileNameWithoutExtension!}.ocr.txt");
+				using var page = engine.Process(image);				
 				file.Confidence = page.GetMeanConfidence();
-				File.WriteAllText(file.FilePathResultOcr, text);
-				_logger.LogDebug($"Tesseract processed {file.FileName} with confidence {file.Confidence}");
+				text.AppendLine(page.GetText());
 			}
+
+			// Process PDF document file.
+			if (file.IsPdf)
+			{
+				using var reader = new PdfReader(file.FilePathRooted);
+				using var document = new PdfDocument(reader);
+				var parser = new PdfDocumentContentParser(document);
+				var strategy = new LocationTextExtractionStrategy();
+				for (int pageNum = 1; pageNum <= document.GetNumberOfPages(); pageNum++)
+				{
+					parser.ProcessContent(pageNum, strategy);
+					text.Append($" {strategy.GetResultantText()}");
+				}
+				document.Close();
+				file.Confidence = 1;
+			}
+			
+			file.FilePathResultOcr = Path.Combine(_settings.OutputPath, $"{file.FileNameWithoutExtension!}.ocr.txt");
+			File.WriteAllText(file.FilePathResultOcr, text.ToString());
+			_logger.LogDebug($"Tesseract processed {file.FileName} with confidence {file.Confidence}");
 		}
 		catch (Exception ex)
 		{
@@ -69,6 +92,7 @@ public class TesseractRepository : ITesseractRepository
 			_logger.LogError(ex, failMessage);
 			file.Errors.Add(failMessage);
 		}
+
 		return file;
 	}
 }

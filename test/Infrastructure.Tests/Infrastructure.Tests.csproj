@@ -29,10 +29,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Examples\example1.pdf">
+    <None Update="Examples\example-1.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\example2.jpeg">
+    <None Update="Examples\example-2.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\example-3.pdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

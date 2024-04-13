@@ -19,6 +19,7 @@ public class FileSummary
 	public string? FileNameWithoutExtension { get; set; }
     public string? FileNameExtension { get; set; }
 	public bool IsImage { get; set; }
+	public bool IsPdf { get; set; }
 	public float Confidence { get; set; }
 	public string? FilePathResultOcr { get; set; }
 	public string? FilePathResultLlm { get; set; }
@@ -26,14 +27,15 @@ public class FileSummary
 
 	public static FileSummary From(string filePathRooted)
 	{
-		var imageExtensions = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tiff" };
+		var imageExtensions = new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".tiff" };
 		return new FileSummary()
 		{
 			FilePathRooted = filePathRooted,
 			FileName = Path.GetFileName(filePathRooted),
 			FileNameExtension = Path.GetExtension(filePathRooted),
 			FileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePathRooted),
-			IsImage = imageExtensions.Contains(Path.GetExtension(filePathRooted))
+			IsImage = imageExtensions.Contains(Path.GetExtension(filePathRooted)),
+			IsPdf = Path.GetExtension(filePathRooted) == ".pdf"
 		};
 	}
 }
