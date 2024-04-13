@@ -58,6 +58,7 @@ public class OpenAIRepository: IOpenAIRepository
 			{
 				var request = new OpenAICompletionsRequest()
 				{
+					Model = _config.Model!,
 					Messages = new List<OpenAIMessage>
 					{
 						new OpenAIMessage { Role = OpenAICompletionRole.User, Content = $"{_settings.Settings.Ocr.CleanupPrompt!}\n```{part}```" }
@@ -226,7 +227,8 @@ public class OpenAIModelResponse
 // Additional options in LM Studio supported: https://platform.openai.com/docs/api-reference/chat/create
 public class OpenAICompletionsRequest
 {
-	public List<OpenAIMessage> Messages { get; set; } = new();
+    public string Model { get; set; }
+    public List<OpenAIMessage> Messages { get; set; } = new();
 	public float Temperature { get; set; } = 0.7f;
 
 	[JsonPropertyName("max_tokens")]

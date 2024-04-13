@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Runtime;
 using Tessa.Application.Enums;
 using Tessa.Application.Events;
 using Tessa.Application.Interface;
@@ -35,39 +34,33 @@ public class OcrService: IOcrService
 	{
 		var summary = new OcrSummary();
 
+		// Validate avilability of paths.
 		var path = _files.GetPathSummary(_settings.Settings.Ocr.InputPath);
 		if (!path.IsExistingDirectory && !path.IsExistingFile)
 		{
 			summary.Errors.Add($"Could not open folder or file {path.PathRooted}.");
 		}
 
+		// Validate availability of OCR engine.
 		switch (_settings.Settings.Ocr.Engine)
 		{
 			case OcrEngine.Tesseract:
 				_tesseract = _tesseract ?? _services.GetService<ITesseractRepository>();
-				foreach (var language in _settings.Settings.Ocr.TessdataLanguage.Split("+"))
+				var status = _tesseract!.IsReady();
+				if (!status.ready)
 				{
-					var tesseractmodel = Path.Combine(_settings.Settings.Ocr.TessdataPath, $"{language}.traineddata");
-					if (!File.Exists(tesseractmodel))
-					{
-						summary.Errors.Add($"Could not find Tesseract model for language {language} at path: {tesseractmodel}. Type: tessa download tessdata {language}");
-					}
-				}
-
-				(bool ready, string? error) = _tesseract?.IsReady() ?? (false, "Implementation for ITesseractRepository not found.");
-				if (error != null)
-				{
-					summary.Errors.Add($"Could not start Tesseract engine: {error}");
+					summary.Errors.Add($"Could not start Tesseract engine: {status.error}");
 				}
 				break;
 		}
 
+		// Validate availability of provider for LLM prompting.
 		var config = _settings.Settings.GetSelectedProviderConfiguration();
 		switch (config?.Provider)
 		{
 			case LlmProvider.Llama:
 				_llama = _llama ?? _services.GetRequiredService<ILlamaRepository>();
-				(bool ready, string? error) = _llama?.IsReady() ?? (false, "Implementation for ILlamaRepository not found.");
+				(bool ready, string? error) = _llama.IsReady();
 				if (error != null)
 				{
 					summary.Errors.Add($"Could not start LLaMa engine: {error}");
@@ -76,6 +69,7 @@ public class OcrService: IOcrService
 
 			case LlmProvider.OpenAI:
 			case LlmProvider.LMStudio:
+			case LlmProvider.Jan:
 				_openai = _openai ?? _services.GetService<IOpenAIRepository>();
 				var result = _openai?.IsReadyAsync().Result;
 				if (!result.HasValue || !result.Value.ready)
@@ -85,10 +79,11 @@ public class OcrService: IOcrService
 				break;
 
 			default:
-				summary.Errors.Add($"Could not find LLM configuration for OCR: {_settings.Settings.Ocr.SelectedProviderConfigName}.");
+				summary.Errors.Add($"Could not find provider configuration for prompting: {_settings.Settings.Ocr.SelectedProviderConfigName}.");
 				break;
 		}
 
+		// Validate availability of cleanup prompt.
 		if (string.IsNullOrWhiteSpace(_settings.Settings.Ocr.CleanupPrompt))
 		{
 			summary.Errors.Add("Prompt for OCR optimalization not configured. Please use one of the examples in tessa.settings.json.");
@@ -108,6 +103,7 @@ public class OcrService: IOcrService
 			summary.CurrentFile = file;
 			summary.CurrentFilePosition = ++position;
 
+			// Process file with OCR engine.
 			switch (_settings.Settings.Ocr.Engine)
 			{
 				case OcrEngine.Tesseract:
@@ -121,6 +117,7 @@ public class OcrService: IOcrService
 					break;
 			}
 
+			// Process file with LLM prompting.
 			var llmConfig = _settings.Settings.GetSelectedProviderConfiguration() as ProviderConfig;
 			_logger.LogInformation($"Optimizing file {file.FileName} with prompting.");
 			file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
@@ -135,6 +132,7 @@ public class OcrService: IOcrService
 
 				case LlmProvider.OpenAI:
 				case LlmProvider.LMStudio:
+				case LlmProvider.Jan:
 					_openai = _openai ?? _services.GetRequiredService<IOpenAIRepository>();
 					await _openai.ProcessAsync(file);
 					break;
@@ -143,6 +141,7 @@ public class OcrService: IOcrService
 					break;
 			}
 
+			// Finish processing file.
 			file.OcrProcessingStatus = OcrProcessingStatus.Finished;
 			ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 			_logger.LogInformation($"Finished processing file.");

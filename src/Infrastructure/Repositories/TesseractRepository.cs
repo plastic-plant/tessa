@@ -1,10 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime;
-using System.Text;
-using System.Threading.Tasks;
 using Tessa.Application.Enums;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
@@ -30,7 +24,18 @@ public class TesseractRepository : ITesseractRepository
 	{
 		try
 		{
-			using var engine = new TesseractEngine(@"./tessdata", _settings.TessdataLanguage);
+			// Verify that the requested Tesseract models are available.
+			foreach (var language in _settings.TessdataLanguage.Split("+"))
+			{
+				var tesseractmodel = Path.Combine(_settings.TessdataPath, $"{language}.traineddata");
+				if (!File.Exists(tesseractmodel))
+				{
+					return (false, $"Could not find Tesseract model for language {language} at path: {tesseractmodel}. Type: tessa download tessdata {language}");
+				}
+			}
+
+			// Verify that Tesseract can be called with the given parameters.
+			using var engine = new TesseractEngine(_settings.TessdataPath, _settings.TessdataLanguage);
 			return (!string.IsNullOrWhiteSpace(engine.Version), null);
 		}
 		catch (Exception ex)
@@ -43,7 +48,9 @@ public class TesseractRepository : ITesseractRepository
 	{
 		try
 		{
-			using var engine = new TesseractEngine(@"./tessdata", _settings.TessdataLanguage, EngineMode.LstmOnly);
+			using var engine = new TesseractEngine(_settings.TessdataPath, _settings.TessdataLanguage, EngineMode.LstmOnly);
+
+			// Process image file.
 			if (file.IsImage)
 			{
 				using var image = Pix.LoadFromFile(file.FilePathRooted);

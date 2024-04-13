@@ -12,6 +12,7 @@ public class ProviderConfig : IProviderConfig
 
 	public static List<IProviderConfig> GetExamples() => new()
 	{
+		new ProviderConfigJan() { Model = "tinyllama-1.1b", ContextSize = 4096, Temperature = 0.7f, MaxTokens = -1 },
 		new ProviderConfigLMStudio() { ContextSize = 16385, Temperature = 0.7f, MaxTokens = -1 }, // gemma-2b-it-q8_0.gguf
 		new ProviderConfigOpenAI() { Model = "gpt-3.5-turbo", ContextSize = 16385, Temperature = 0.7f, MaxTokens = -1, ApiKey = "YOUR_API_KEY" },
 		new ProviderConfigLlamaGguf() { Model = "wizardLM-7B.Q8_0.gguf", ContextSize = 2048, Seed = 42, GpuLayerCount = 5, Temperature = 0.7f, MaxTokens = -1 },

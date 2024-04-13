@@ -9,7 +9,7 @@ public class ProviderConfigOpenAI : ProviderConfig
 	public string ApiHostUrl { get; set; }
 	[JsonPropertyName("apikey")]
 	public string? ApiKey { get; set; }
-	public string? Model { get; set; }
+	public string Model { get; set; }
 
 	public ProviderConfigOpenAI()
 	{

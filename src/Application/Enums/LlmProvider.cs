@@ -5,5 +5,6 @@
 		Llama, // .gguf
 		OpenAI, // api
 		LMStudio, // api
+		Jan // api
 	}
 }
