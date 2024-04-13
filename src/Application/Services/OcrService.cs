@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Runtime;
 using Tessa.Application.Enums;
 using Tessa.Application.Events;
 using Tessa.Application.Interface;
@@ -18,6 +17,7 @@ public class OcrService: IOcrService
 
 	private ITesseractRepository? _tesseract;
 	private ILlamaRepository? _llama;
+	private IOpenAIRepository? _openai;
 
 	public OcrService(ILogger<OcrService> logger, IServiceProvider services, ISettingsService settings, IFileRepository files)
     {
@@ -52,7 +52,7 @@ public class OcrService: IOcrService
 					}
 				}
 
-				(_, string? error) = _tesseract?.IsReady() ?? (null, "Implementation for ITesseractRepository not found.");
+				(bool ready, string? error) = _tesseract?.IsReady() ?? (false, "Implementation for ITesseractRepository not found.");
 				if (error != null)
 				{
 					summary.Errors.Add($"Could not start Tesseract engine: {error}");
@@ -60,24 +60,35 @@ public class OcrService: IOcrService
 				break;
 		}
 
-		var llm = _settings.Settings.Llm.LlmConfigs.FirstOrDefault(config => config.Name == _settings.Settings.Ocr.LlmPromptConfigName);
-		switch (llm?.Provider)
+		var config = _settings.Settings.Llm.LlmConfigs.FirstOrDefault(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase));
+		switch (config?.Provider)
 		{
 			case LlmProvider.Llama:
-				if (!File.Exists(llm.Model))
+				_llama = _llama ?? _services.GetRequiredService<ILlamaRepository>();
+				(bool ready, string? error) = _llama?.IsReady() ?? (false, "Implementation for ILlamaRepository not found.");
+				if (error != null)
 				{
-					summary.Errors.Add($"Could not find LLM model at path: {llm.Model}.");
+					summary.Errors.Add($"Could not start LLaMa engine: {error}");
 				}
-				if (string.IsNullOrWhiteSpace(llm.Prompt))
+				break;
+
+			case LlmProvider.OpenAI:
+				_openai = _openai ?? _services.GetService<IOpenAIRepository>();
+				var result = _openai?.IsReadyAsync().Result;
+				if (!result.HasValue || !result.Value.ready)
 				{
-					summary.Errors.Add("Prompt for OCR optimalization not configured. Please use one of the examples in tessa.settings.json.");
+					summary.Errors.Add($"Could not read provider API: {result!.Value.error}");
 				}
-				// TODO: Test if Ready.
 				break;
 
 			default:
 				summary.Errors.Add($"Could not find LLM configuration for OCR: {_settings.Settings.Ocr.LlmPromptConfigName}.");
 				break;
+		}
+
+		if (string.IsNullOrWhiteSpace(config.Prompt))
+		{
+			summary.Errors.Add("Prompt for OCR optimalization not configured. Please use one of the examples in tessa.settings.json.");
 		}
 
 		return summary;
@@ -102,23 +113,30 @@ public class OcrService: IOcrService
 					file.OcrProcessingStatus = OcrProcessingStatus.Processing;
 					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 					_tesseract.Process(file);
-					_tesseract?.Dispose();
 					break;
 
 				default:
 					break;
 			}
 
-			var llmConfig = _settings.Settings.Llm.LlmConfigs.FirstOrDefault(config => config.Name == _settings.Settings.Ocr.LlmPromptConfigName);
+			var llmConfig = _settings.Settings.Llm.LlmConfigs.FirstOrDefault(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase));
 			switch (llmConfig?.Provider)
 			{
 				case LlmProvider.Llama:
+					_llama = _llama ?? _services.GetRequiredService<ILlamaRepository>();
 					_logger.LogInformation($"Optimizing file {file.FileName} with LLM prompting.");
 					file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
 					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
-					_llama = _llama ?? _services.GetRequiredService<ILlamaRepository>();
 					await _llama.ProcessAsync(file);
 					_llama?.Dispose();
+					break;
+
+				case LlmProvider.OpenAI:
+					_openai = _openai ?? _services.GetRequiredService<IOpenAIRepository>();
+					_logger.LogInformation($"Optimizing file {file.FileName} with OpenAI prompting.");
+					file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
+					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
+					await _openai.ProcessAsync(file);
 					break;
 
 				default:
@@ -159,7 +177,6 @@ public class OcrService: IOcrService
 
 	public void Dispose()
 	{
-		_tesseract?.Dispose();
 		_llama?.Dispose();
 	}
 }

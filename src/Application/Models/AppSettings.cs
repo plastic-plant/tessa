@@ -60,6 +60,7 @@ public class AppSettings
 		{
 			public static List<LlmConfigExample> GetConfigExamples() => new()
 			{
+				new LlmConfigExample { Name = "OpenAI", Provider = LlmProvider.OpenAI, Model = "gpt-3.5-turbo", ContextSize = 16385, Seed = 42, GpuLayerCount = 5, Temperature = 0.7f, MaxTokens = -1, MaxPrompt = 200, Prompt = "Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text. Here's the text:", SuggestedPrompts = ["Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text.  Here's the text:"] },
 				new LlmConfigExample { Name = "wizardLM-7B", Provider = LlmProvider.Llama, Model = "C:\\Users\\Patrick\\.cache\\lm-studio\\models\\TheBloke\\wizardLM-7B-GGUF\\wizardLM-7B.Q8_0.gguf", ContextSize = 2048, Seed = 42, GpuLayerCount = 5, Temperature = 0.7f, MaxTokens = -1, MaxPrompt = 200, Prompt = "Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text. Here's the text:", SuggestedPrompts = ["Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text.  Here's the text:"] },
 				new LlmConfigExample { Name = "llama-2-7b-chat", Provider = LlmProvider.Llama, Model = "C:\\Users\\Patrick\\.cache\\lm-studio\\models\\TheBloke\\Llama-2-7B-Chat-GGUF\\llama-2-7b-chat.Q3_K_M.gguf", ContextSize = 4096, Seed = 42, GpuLayerCount = 5, Temperature = 0.7f, MaxTokens = -1, MaxPrompt = 200, Prompt = "Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text. Here's the text:", SuggestedPrompts = ["Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text.  Here's the text:"] },
 				new LlmConfigExample { Name = "gemma-2b-it", Provider = LlmProvider.Llama, Model = "C:\\Users\\Patrick\\.cache\\lm-studio\\models\\lmstudio-ai\\gemma-2b-it-GGUF\\gemma-2b-it.gguf", ContextSize = 1024, Seed = 42, GpuLayerCount = 5, Temperature = 0.6f, MaxTokens = -1, MaxPrompt = 200, Prompt = "Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text.  Here's the text:", SuggestedPrompts = ["Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text.  Here's the text:"] },
@@ -71,7 +72,8 @@ public class AppSettings
 		{
 			public required string Name { get; set; }
 			public LlmProvider Provider { get; set; }
-			public required string Model { get; set; }			
+            public string? ApiKey { get; set; }
+            public string? Model { get; set; }			
 			public uint? ContextSize { get; set; }
 			public uint Seed { get; set; }
 			public int GpuLayerCount { get; set; }

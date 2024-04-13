@@ -4,6 +4,8 @@ namespace Tessa.Application.Models;
 
 public class FileSummary
 {
+	public List<string> Errors { get; set; } = new();
+
 	/// <summary>
 	/// The original path provided by the user. Can be a full path, a relative path or an incorrect path.
 	/// </summary>

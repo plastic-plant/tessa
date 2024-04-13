@@ -47,7 +47,7 @@ namespace Application.Tests.Services
 				.Returns(new PathSummary { IsExistingDirectory = true });
 			tesseract
 				.Setup(tesseract => tesseract.IsReady())
-				.Returns((null, "error"));
+				.Returns((false, "error"));
 			var services = new ServiceCollection();
 			services.AddSingleton(tesseract.Object);
 			var provider = services.BuildServiceProvider();

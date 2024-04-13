@@ -3,5 +3,6 @@
 	public enum LlmProvider
 	{
 		Llama, // .gguf
+		OpenAI, // api
 	}
 }

@@ -2,9 +2,9 @@
 
 namespace Tessa.Application.Interfaces
 {
-	public interface ITesseractRepository : IDisposable
+	public interface ITesseractRepository
 	{
-		(string? version, string? error) IsReady();
+		(bool ready, string? error) IsReady();
 		FileSummary Process(FileSummary file);
 	}
 }

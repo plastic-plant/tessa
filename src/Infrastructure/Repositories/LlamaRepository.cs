@@ -5,8 +5,6 @@ using Microsoft.Extensions.Logging;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
-using Tesseract;
-using static System.Net.Mime.MediaTypeNames;
 using static Tessa.Application.Models.AppSettings.LlmSettings;
 
 namespace Tessa.Infrastructure.Repositories;
@@ -29,13 +27,26 @@ public class LlamaRepository: ILlamaRepository
 
 	public (bool ready, string? error) IsReady()
 	{
-		// TODO: LlamaRepository.IsReady
+		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase)) as LlmConfig;
+		try
+		{
+			var executor = GetModelProvider();
+			if (executor == null)
+			{
+				throw new Exception("Executor returns null.");
+			}
+		}
+		catch (Exception ex)
+		{
+			return (false, $"Could not open LLM: {ex.Message}");
+		}
+		
 		return (true, null);
 	}
 
 	public async Task<FileSummary> ProcessAsync(FileSummary file)
 	{
-		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => config.Name == _settings.Settings.Ocr.LlmPromptConfigName);
+		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase)) as LlmConfig;
 		var executor = GetModelProvider();
 		var parameters = new InferenceParams()
 		{
@@ -52,7 +63,6 @@ public class LlamaRepository: ILlamaRepository
 			await foreach (var text in executor.InferAsync(prompt, parameters))
 			{
 				response.Write(text);
-				Console.Write(text);
 			}
 		}
 

@@ -6,13 +6,28 @@
     "engine": "tesseract",
     "tessdata": "tessdata",
     "lang": "eng",
-    "llm": "wizardLM-7B"
+    "llm": "openai"
   },
   "llm": {
     "configs": [
       {
         "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text:"
+          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
+        ],
+        "name": "OpenAI",
+        "provider": "openai",
+        "model": "gpt-3.5-turbo",
+        "contextSize": 16385,
+        "seed": 42,
+        "gpuLayerCount": 5,
+        "temperature": 0.7,
+        "maxTokens": 4096,
+        "maxPrompt": 200,
+        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
+      },
+      {
+        "suggestions": [
+          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
         ],
         "name": "wizardLM-7B",
         "provider": "llama",
@@ -23,11 +38,11 @@
         "temperature": 0.7,
         "maxTokens": -1,
         "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text:"
+        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
       },
       {
         "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text:"
+          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
         ],
         "name": "llama-2-7b-chat",
         "provider": "llama",
@@ -38,11 +53,11 @@
         "temperature": 0.7,
         "maxTokens": -1,
         "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text:"
+        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
       },
       {
         "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text:"
+          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
         ],
         "name": "gemma-2b-it",
         "provider": "llama",
@@ -53,11 +68,11 @@
         "temperature": 0.6,
         "maxTokens": -1,
         "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text:"
+        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
       },
       {
         "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text:"
+          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
         ],
         "name": "geitje-7b-ultra",
         "provider": "llama",
@@ -68,7 +83,7 @@
         "temperature": 0.6,
         "maxTokens": -1,
         "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text:"
+        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
       }
     ]
   }
