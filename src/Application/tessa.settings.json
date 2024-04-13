@@ -6,85 +6,72 @@
     "engine": "tesseract",
     "tessdata": "tessdata",
     "lang": "eng",
-    "llm": "openai"
+    "llm": "LM Studio",
+    "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
   },
   "llm": {
     "configs": [
       {
-        "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
-        ],
-        "name": "OpenAI",
-        "provider": "openai",
-        "model": "gpt-3.5-turbo",
+        "name": "LM Studio",
+        "provider": "lmstudio",
         "contextSize": 16385,
-        "seed": 42,
-        "gpuLayerCount": 5,
         "temperature": 0.7,
         "maxTokens": 4096,
-        "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
+        "maxPrompt": 200
       },
       {
-        "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
-        ],
+        "name": "OpenAI: gpt-3.5-turbo",
+        "provider": "openai",
+        "model": "gpt-3.5-turbo",
+        "apikey": "YOUR_API_KEY",
+        "contextSize": 16385,
+        "temperature": 0.7,
+        "maxTokens": 4096,
+        "maxPrompt": 200
+      },
+      {
         "name": "wizardLM-7B",
         "provider": "llama",
         "model": "models\\wizardLM-7B.Q8_0.gguf",
         "contextSize": 2048,
-        "seed": 42,
+        "seed": 4200,
         "gpuLayerCount": 5,
         "temperature": 0.7,
         "maxTokens": -1,
-        "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
+        "maxPrompt": 200
       },
       {
-        "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
-        ],
         "name": "llama-2-7b-chat",
         "provider": "llama",
         "model": "models\\llama-2-7b-chat.Q3_K_M.gguf",
         "contextSize": 4096,
-        "seed": 42,
+        "seed": 4200,
         "gpuLayerCount": 5,
         "temperature": 0.7,
         "maxTokens": -1,
-        "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
+        "maxPrompt": 200
       },
       {
-        "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
-        ],
         "name": "gemma-2b-it",
         "provider": "llama",
         "model": "models\\gemma-2b-it.gguf",
         "contextSize": 1024,
-        "seed": 42,
+        "seed": 4200,
         "gpuLayerCount": 5,
         "temperature": 0.6,
         "maxTokens": -1,
-        "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
+        "maxPrompt": 200
       },
       {
-        "suggestions": [
-          "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
-        ],
         "name": "geitje-7b-ultra",
         "provider": "llama",
         "model": "models\\geitje-7b-ultra.Q8_0.gguf",
         "contextSize": 32768,
-        "seed": 42,
+        "seed": 4200,
         "gpuLayerCount": 5,
         "temperature": 0.6,
         "maxTokens": -1,
-        "maxPrompt": 200,
-        "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text.  Here\u0027s the text: "
-      }
+        "maxPrompt": 200      }
     ]
   }
 }

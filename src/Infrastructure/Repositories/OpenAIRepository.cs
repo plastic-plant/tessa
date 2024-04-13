@@ -6,7 +6,7 @@ using Tessa.Application.Enums;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
-using static Tessa.Application.Models.AppSettings.LlmSettings;
+using Tessa.Application.Models.ProviderConfigs;
 
 namespace Tessa.Infrastructure.Repositories;
 
@@ -18,59 +18,49 @@ public class OpenAIRepository: IOpenAIRepository
 	private readonly ILogger<OpenAIRepository> _logger;
 	private readonly IServiceProvider _services;
 	private readonly ISettingsService _settings;
-	private LlmConfig? _config;
-
-	private const string ApiHostUrl = "https://api.openai.com";
+	private readonly ProviderConfigOpenAI _config;
 
 	public OpenAIRepository(ILogger<OpenAIRepository> logger, IServiceProvider services, ISettingsService settings)
 	{
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		_services = services ?? throw new ArgumentNullException(nameof(services));
 		_settings = settings ?? throw new ArgumentNullException(nameof(settings));
+		_config = _settings.Settings.GetSelectedProviderConfiguration() as ProviderConfigOpenAI ?? throw new ArgumentNullException(nameof(_config));
 	}
 
 	public async Task<(bool ready, string? error)> IsReadyAsync()
 	{
-		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase)) as LlmConfig;
 		try
 		{
-			var model = await GetAvailableMatchingModelAsync(_config.Model);
+			var model = await GetAvailableMatchingModelAsync();
 			return (model != null, null);
 		}
 		catch (Exception ex)
 		{
-			return (false, ex.StackTrace);
+			return (false, ex.Message);
 		}
 	}
 
 	public async Task<FileSummary> ProcessAsync(FileSummary file)
 	{
-		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase)) as LlmConfig;
-		var model = await GetAvailableMatchingModelAsync(_config.Model);
-
-
-		string apikey = "";
-		string apiUrl = $"{ApiHostUrl}/v1/chat/completions";
-
 		using var httpClient = new HttpClient();
-		if (!string.IsNullOrWhiteSpace(apikey))
+		if (!string.IsNullOrWhiteSpace(_config.ApiKey))
 		{
-			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apikey);
+			httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _config.ApiKey);
 		}
 
 		var content = File.ReadAllText(file.FilePathResultOcr);
-		var parts = SplitTextInParts(content, _config.MaxPrompt);
+		var parts = SplitTextInParts(content, _settings.Settings.Ocr.MaxPrompt);
 		using var response = new StringWriter();
 		foreach (var part in parts)
 		{
-
 			try
 			{
 				var request = new OpenAICompletionsRequest()
 				{
 					Messages = new List<OpenAIMessage>
 					{
-						new OpenAIMessage { Role = OpenAICompletionRole.User, Content = $"{_config.Prompt!}\n```{part}```" }
+						new OpenAIMessage { Role = OpenAICompletionRole.User, Content = $"{_settings.Settings.Ocr.CleanupPrompt!}\n```{part}```" }
 					},
 					Temperature = _config.Temperature,
 					MaxTokens = _config.MaxTokens,
@@ -80,7 +70,7 @@ public class OpenAIRepository: IOpenAIRepository
 				var requestJson = JsonSerializer.Serialize(request, _serializerOptions);
 				var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
 
-				var responseContent = await httpClient.PostAsync(apiUrl, requestContent);
+				var responseContent = await httpClient.PostAsync($"{_config.ApiHostUrl}/v1/chat/completions", requestContent);
 				if (!responseContent.IsSuccessStatusCode)
 				{
 					throw new Exception($"POST request failed with status code {responseContent.StatusCode}");
@@ -92,24 +82,27 @@ public class OpenAIRepository: IOpenAIRepository
 					throw new Exception("No data returned from API");
 				}
 
-				var responseModel = JsonSerializer.Deserialize<OpenAIModelResponse>(json, _serializerOptions);
-
-				file.FilePathResultLlm = Path.Combine(_settings.Settings.Ocr.OutputPath, $"{file.FileNameWithoutExtension!}.llm.txt");
-				File.WriteAllText(file.FilePathResultOcr, response.ToString());
+				var responseModel = JsonSerializer.Deserialize<OpenAICompletionsResponse>(json, _serializerOptions);
+				var optimizedText = responseModel?.Choices?.FirstOrDefault()?.Message?.Content;
+				if (!string.IsNullOrWhiteSpace(optimizedText))
+				{
+					response.Write($" {optimizedText}");
+				}
 			}
 			catch (Exception ex)
 			{
 				file.OcrProcessingStatus = OcrProcessingStatus.Failed;
 				file.Errors.Add($"An error occurred: {ex.Message}");
-				return file;
 			}
-
 		}
+
+		file.FilePathResultLlm = Path.Combine(_settings.Settings.Ocr.OutputPath, $"{file.FileNameWithoutExtension!}.llm.txt");
+		File.WriteAllText(file.FilePathResultLlm, response.ToString());
 
 		return file;
 	}
 
-	internal async Task<string?> GetAvailableMatchingModelAsync(string? configName = null)
+	internal async Task<string?> GetAvailableMatchingModelAsync()
 	{
 		var models = await GetModelsAsync();
 		var model = models?.Data?.Count switch
@@ -117,7 +110,7 @@ public class OpenAIRepository: IOpenAIRepository
 			null => throw new Exception("Empty response or API failure"),
 			0 => throw new Exception("No models found"),
 			1 => models.Data.First().Id, // TheBloke/phi-2-GGUF/phi-2.Q4_K_S.gguf
-			_ => models.Data.FirstOrDefault(model => model.Id!.Contains(configName ?? "", StringComparison.InvariantCultureIgnoreCase))?.Id ?? throw new Exception($"Model {_config.Name} could not be matched. Provider offers: {string.Join(", ", models.Data.Select(model => model.Id))}") // phi-2.Q4_K_S
+			_ => models.Data.FirstOrDefault(model => model.Id!.Contains(_config.Model!, StringComparison.InvariantCultureIgnoreCase))?.Id ?? throw new Exception($"Model {_config.Name} could not be matched. Provider offers: {string.Join(", ", models.Data.Select(model => model.Id))}") // phi-2.Q4_K_S
 		};
 		return model;
 	}
@@ -127,7 +120,6 @@ public class OpenAIRepository: IOpenAIRepository
 	/// </summary>
 	internal async Task<OpenAIModelResponse?> GetModelsAsync()
 	{
-		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase)) as LlmConfig;
 		using var httpClient = new HttpClient();
 		if (!string.IsNullOrWhiteSpace(_config.ApiKey))
 		{
@@ -136,18 +128,17 @@ public class OpenAIRepository: IOpenAIRepository
 
 		try
 		{
-			string json = await httpClient.GetStringAsync(ApiHostUrl);
+			string json = await httpClient.GetStringAsync($"{_config.ApiHostUrl}/v1/models");
 			if (string.IsNullOrWhiteSpace(json))
 			{
 				throw new Exception("No data returned from API");
 			}
-			var response = JsonSerializer.Deserialize<OpenAIModelResponse>(json, _serializerOptions);
-			return response;
+			return JsonSerializer.Deserialize<OpenAIModelResponse>(json, _serializerOptions); ;
 
 		}
 		catch (Exception ex)
 		{
-			throw new Exception($"An error occurred: {ex.Message}");
+			_logger.LogError(ex, $"An error occurred: {ex.Message}");
 			return null;
 		}
 	}
@@ -253,6 +244,8 @@ public class OpenAIMessage
 
 public enum OpenAICompletionRole
 {
+	[JsonPropertyName("assistant")]
+	Assistant,
 	[JsonPropertyName("system")]
 	System,
 	[JsonPropertyName("user")]

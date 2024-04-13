@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
-using static Tessa.Application.Models.AppSettings.LlmSettings;
+using Tessa.Application.Models.ProviderConfigs;
 
 namespace Tessa.Infrastructure.Repositories;
 
@@ -14,7 +14,7 @@ public class LlamaRepository: ILlamaRepository
 	private readonly ILogger<LlamaRepository> _logger;
 	private readonly IServiceProvider _services;
 	private readonly ISettingsService _settings;
-	private LlmConfig? _config;
+	private ProviderConfigLlamaGguf? _config;
 	private LLamaWeights? _model;
 	private ILLamaExecutor? _executor;
 
@@ -27,7 +27,7 @@ public class LlamaRepository: ILlamaRepository
 
 	public (bool ready, string? error) IsReady()
 	{
-		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase)) as LlmConfig;
+		_config = _config ?? _settings.Settings.GetSelectedProviderConfiguration() as ProviderConfigLlamaGguf;
 		try
 		{
 			var executor = GetModelProvider();
@@ -46,7 +46,7 @@ public class LlamaRepository: ILlamaRepository
 
 	public async Task<FileSummary> ProcessAsync(FileSummary file)
 	{
-		_config = _config ?? _settings.Settings.Llm.LlmConfigs.First(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase)) as LlmConfig;
+		_config = _config ?? _settings.Settings.GetSelectedProviderConfiguration() as ProviderConfigLlamaGguf;
 		var executor = GetModelProvider();
 		var parameters = new InferenceParams()
 		{
@@ -55,11 +55,11 @@ public class LlamaRepository: ILlamaRepository
 		};
 
 		var content = File.ReadAllText(file.FilePathResultOcr);
-		var parts = SplitTextInParts(content, _config.MaxPrompt);
+		var parts = SplitTextInParts(content, _settings.Settings.Ocr.MaxPrompt);
 		using var response = new StringWriter();
 		foreach (var part in parts)
 		{
-			var prompt = $"{_config.Prompt!}\n```{part}```";
+			var prompt = $"{_settings.Settings.Ocr.CleanupPrompt!}```{part}```";
 			await foreach (var text in executor.InferAsync(prompt, parameters))
 			{
 				response.Write(text);

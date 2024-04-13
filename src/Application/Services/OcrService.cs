@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Runtime;
 using Tessa.Application.Enums;
 using Tessa.Application.Events;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
+using Tessa.Application.Models.ProviderConfigs;
 
 namespace Tessa.Application.Services;
 
@@ -60,7 +62,7 @@ public class OcrService: IOcrService
 				break;
 		}
 
-		var config = _settings.Settings.Llm.LlmConfigs.FirstOrDefault(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase));
+		var config = _settings.Settings.GetSelectedProviderConfiguration();
 		switch (config?.Provider)
 		{
 			case LlmProvider.Llama:
@@ -73,6 +75,7 @@ public class OcrService: IOcrService
 				break;
 
 			case LlmProvider.OpenAI:
+			case LlmProvider.LMStudio:
 				_openai = _openai ?? _services.GetService<IOpenAIRepository>();
 				var result = _openai?.IsReadyAsync().Result;
 				if (!result.HasValue || !result.Value.ready)
@@ -82,11 +85,11 @@ public class OcrService: IOcrService
 				break;
 
 			default:
-				summary.Errors.Add($"Could not find LLM configuration for OCR: {_settings.Settings.Ocr.LlmPromptConfigName}.");
+				summary.Errors.Add($"Could not find LLM configuration for OCR: {_settings.Settings.Ocr.SelectedProviderConfigName}.");
 				break;
 		}
 
-		if (string.IsNullOrWhiteSpace(config.Prompt))
+		if (string.IsNullOrWhiteSpace(_settings.Settings.Ocr.CleanupPrompt))
 		{
 			summary.Errors.Add("Prompt for OCR optimalization not configured. Please use one of the examples in tessa.settings.json.");
 		}
@@ -114,28 +117,25 @@ public class OcrService: IOcrService
 					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 					_tesseract.Process(file);
 					break;
-
 				default:
 					break;
 			}
 
-			var llmConfig = _settings.Settings.Llm.LlmConfigs.FirstOrDefault(config => string.Equals(config.Name, _settings.Settings.Ocr.LlmPromptConfigName, StringComparison.OrdinalIgnoreCase));
+			var llmConfig = _settings.Settings.GetSelectedProviderConfiguration() as ProviderConfig;
+			_logger.LogInformation($"Optimizing file {file.FileName} with prompting.");
+			file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
+			ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 			switch (llmConfig?.Provider)
 			{
 				case LlmProvider.Llama:
 					_llama = _llama ?? _services.GetRequiredService<ILlamaRepository>();
-					_logger.LogInformation($"Optimizing file {file.FileName} with LLM prompting.");
-					file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
-					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 					await _llama.ProcessAsync(file);
 					_llama?.Dispose();
 					break;
 
 				case LlmProvider.OpenAI:
+				case LlmProvider.LMStudio:
 					_openai = _openai ?? _services.GetRequiredService<IOpenAIRepository>();
-					_logger.LogInformation($"Optimizing file {file.FileName} with OpenAI prompting.");
-					file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
-					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 					await _openai.ProcessAsync(file);
 					break;
 
