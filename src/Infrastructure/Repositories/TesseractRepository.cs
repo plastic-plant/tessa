@@ -1,7 +1,7 @@
 ﻿using iText.Kernel.Pdf;
-using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using iText.Kernel.Pdf.Canvas.Parser;
-using iText.Pdfa;
+using iText.Kernel.Pdf.Canvas.Parser.Data;
+using iText.Kernel.Pdf.Canvas.Parser.Listener;
 using Microsoft.Extensions.Logging;
 using System.Text;
 using Tessa.Application.Enums;
@@ -74,8 +74,15 @@ public class TesseractRepository : ITesseractRepository
 				var strategy = new LocationTextExtractionStrategy();
 				for (int pageNum = 1; pageNum <= document.GetNumberOfPages(); pageNum++)
 				{
+					// Extract text from each page.
 					parser.ProcessContent(pageNum, strategy);
 					text.Append($" {strategy.GetResultantText()}");
+
+					// Extract images from each page for OCR.
+					var listener = new ImageRenderListener(engine, file, text);
+					var canvas = new PdfCanvasProcessor(listener);
+					PdfPage page = document.GetPage(pageNum);
+					canvas.ProcessPageContent(page);
 				}
 				document.Close();
 				file.Confidence = 1;
@@ -94,5 +101,47 @@ public class TesseractRepository : ITesseractRepository
 		}
 
 		return file;
+	}
+}
+
+public class ImageRenderListener : IEventListener
+{
+	private TesseractEngine engine;
+	private FileSummary file;
+	private StringBuilder text;
+
+	public ImageRenderListener(TesseractEngine engine, FileSummary file, StringBuilder text)
+	{
+		this.engine = engine ?? throw new ArgumentNullException(nameof(engine));
+		this.file = file ?? throw new ArgumentNullException(nameof(file));
+		this.text = text ?? throw new ArgumentNullException(nameof(text));
+	}
+
+	public void EventOccurred(IEventData data, EventType type)
+	{
+		if (type.Equals(EventType.RENDER_IMAGE))
+		{
+			ImageRenderInfo renderInfo = (ImageRenderInfo)data;
+			try
+			{
+				// Extract image.
+				byte[] imageBytes = renderInfo.GetImage().GetImageBytes();
+
+				// Process image with Tesseract OCR.
+				using var image = Pix.LoadFromMemory(imageBytes);
+				using var page = engine.Process(image);
+				file.Confidence = page.GetMeanConfidence();
+				text.AppendLine(page.GetText());
+			}
+			catch (IOException ex)
+			{
+				file.Errors.Add($"Error extracting image from PDF: {ex.Message}");
+			}
+		}
+	}
+
+	public ICollection<EventType> GetSupportedEvents()
+	{
+		return new List<EventType> { EventType.RENDER_IMAGE };
 	}
 }

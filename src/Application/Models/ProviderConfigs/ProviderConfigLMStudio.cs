@@ -1,12 +1,14 @@
-﻿using Tessa.Application.Enums;
+﻿using System.Text.Json.Serialization;
+using Tessa.Application.Enums;
 
 namespace Tessa.Application.Models.ProviderConfigs;
 
 public class ProviderConfigLMStudio : ProviderConfigOpenAI
 {
+    [JsonConstructor]
     public ProviderConfigLMStudio()
     {
-        Name = "LM Studio";
+        Name = "lmstudio";
 		Provider = LlmProvider.LMStudio;
         ApiHostUrl = "http://localhost:1234";
         ApiKey = "";

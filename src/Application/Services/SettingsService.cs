@@ -17,6 +17,7 @@ public class SettingsService : ISettingsService
 		NumberHandling = JsonNumberHandling.AllowReadingFromString,
 		Converters = { new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower) },
 		ReadCommentHandling = JsonCommentHandling.Skip,
+		PreferredObjectCreationHandling = JsonObjectCreationHandling.Populate,
 	};
 
 	public AppSettings Load(string? settingsPath = null)

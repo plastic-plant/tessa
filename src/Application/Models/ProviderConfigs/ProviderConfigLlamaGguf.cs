@@ -10,7 +10,7 @@ namespace Tessa.Application.Models.ProviderConfigs
 
         public ProviderConfigLlamaGguf()
         {
-            Name = "LLaMA GGUF";
+            Name = "llama";
 			Provider = LlmProvider.Llama;
 			Seed = (uint)DateTime.Now.Ticks;
 		}

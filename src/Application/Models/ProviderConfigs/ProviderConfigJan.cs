@@ -6,7 +6,7 @@ public class ProviderConfigJan : ProviderConfigOpenAI
 {
     public ProviderConfigJan()
     {
-        Name = "Jan";
+        Name = "jan";
 		Provider = LlmProvider.LMStudio;
         ApiHostUrl = "http://localhost:1337";
         ApiKey = "";

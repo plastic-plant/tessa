@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Tessa.Application.Enums;
 
 namespace Tessa.Application.Models.ProviderConfigs;
@@ -13,7 +14,7 @@ public class ProviderConfigOpenAI : ProviderConfig
 
 	public ProviderConfigOpenAI()
 	{
-		Name = "OpenAI API";
+		Name = "openai";
 		Provider = LlmProvider.OpenAI;
 		ApiHostUrl = "https://api.openai.com";
 		ApiKey = "YOUR_API_KEY";

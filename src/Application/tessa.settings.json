@@ -6,13 +6,13 @@
     "engine": "tesseract",
     "tessdata": "tessdata",
     "lang": "eng",
-    "llm": "Jan",
+    "llm": "lmstudio",
     "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
   },
   "llm": {
     "configs": [
       {
-        "name": "Jan",
+        "name": "jan",
         "provider": "jan",
         "contextSize": 4096,
         "temperature": 0.7,
@@ -20,7 +20,7 @@
         "maxPrompt": 500
       },
       {
-        "name": "LM Studio",
+        "name": "lmstudio",
         "provider": "lmstudio",
         "contextSize": 16385,
         "temperature": 0.7,
@@ -28,7 +28,7 @@
         "maxPrompt": 200
       },
       {
-        "name": "OpenAI: gpt-3.5-turbo",
+        "name": "openai",
         "provider": "openai",
         "model": "gpt-3.5-turbo",
         "apikey": "YOUR_API_KEY",

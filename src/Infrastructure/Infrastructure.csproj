@@ -63,6 +63,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Update="input\example-4.pdf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
       <None Update="input\example-1.png">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
@@ -80,6 +83,10 @@
 
     <ItemGroup>
       <NativeLibs Remove="input\example-3.pdf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <NativeLibs Remove="input\example-4.pdf" />
     </ItemGroup>
 
 </Project>
