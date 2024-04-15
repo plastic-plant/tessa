@@ -6,7 +6,9 @@ public interface ISettingsService : ISettingsService<AppSettings>;
 
 public interface ISettingsService<T> where T : class
 {
+	AppRegistry Registry { get; }
 	T Settings { get; }
-	T Load(string? settingsPath);
-	bool Save(string settingsPath);
+	AppRegistry LoadRegistry();
+	T LoadSettings(string? settingsPath);
+	bool SaveSettings(string settingsPath);
 }

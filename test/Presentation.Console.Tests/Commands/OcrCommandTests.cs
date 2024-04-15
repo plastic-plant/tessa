@@ -25,7 +25,7 @@ public class OcrCommandTests
 		var logger = new Mock<ILogger<OcrCommand>>();
 		var settingsService = new Mock<ISettingsService>();
 		settingsService
-			.Setup(settings => settings.Load(It.IsAny<string>()))
+			.Setup(settings => settings.LoadSettings(It.IsAny<string>()))
 			.Returns(new AppSettings() { Errors = givenNoErrors });
 		var ocrService = new Mock<IOcrService>();
 		ocrService
@@ -49,7 +49,7 @@ public class OcrCommandTests
 			.Setup(logger => logger.Log(LogLevel.Error, It.IsAny<EventId>(), It.IsAny<object>(), It.IsAny<Exception>(), It.IsAny<Func<object, Exception?, string>>()));
 		var settingsService = new Mock<ISettingsService>();
 		settingsService
-			.Setup(settings => settings.Load(It.IsAny<string>()))
+			.Setup(settings => settings.LoadSettings(It.IsAny<string>()))
 			.Returns(new AppSettings() { Errors = givenSomeErrors });
 		var ocrService = new Mock<IOcrService>();
 		ocrService

@@ -49,7 +49,7 @@ public sealed class OcrCommand : AsyncCommand<OcrCommand.Settings>
 
 	public override ValidationResult Validate(CommandContext context, Settings settings)
 	{
-		var appsettings = _settingsService.Load(settings.SettingsPath);
+		var appsettings = _settingsService.LoadSettings(settings.SettingsPath);
 
 		if (settings.InputPath != AppSettings.OcrSettings.Defaults.InputPath) appsettings.Ocr.InputPath = settings.InputPath;
 		if (settings.OutputPath != AppSettings.OcrSettings.Defaults.OutputPath) appsettings.Ocr.OutputPath = settings.OutputPath;

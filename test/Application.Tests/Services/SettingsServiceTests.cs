@@ -25,7 +25,7 @@ namespace Application.Tests.Services
 			var existingFileName = "tessa.settings.json";
 			File.WriteAllText(existingFileName, json);
 			
-			service.Load(existingFileName);
+			service.LoadSettings(existingFileName);
 			
 			Assert.Equal(settings.Ocr.InputPath, service.Settings.Ocr.InputPath);
 			Assert.Equal(settings.Ocr.OutputPath, service.Settings.Ocr.OutputPath);
@@ -41,7 +41,7 @@ namespace Application.Tests.Services
 			var notExistingFile = "not.existing.settings.json";
 			var sut = new SettingsService();
 
-			sut.Load(notExistingFile);
+			sut.LoadSettings(notExistingFile);
 
 			Assert.EndsWith(expectedError.Substring(expectedError.Length - 58), sut.Settings.Errors.First());
 		}
@@ -55,7 +55,7 @@ namespace Application.Tests.Services
 			File.WriteAllText(filename, invalidJson);
 			var sut = new SettingsService();
 
-			sut.Load(filename);
+			sut.LoadSettings(filename);
 
 			Assert.StartsWith(expectedError.Substring(0, 29), sut.Settings.Errors.First());
 			Assert.EndsWith(expectedError.Substring(expectedError.Length - 88), sut.Settings.Errors.First());

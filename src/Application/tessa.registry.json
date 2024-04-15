@@ -1,0 +1,1166 @@
+{
+  "tessdata": [
+    {
+      "name": "Arabic.traineddata",
+      "alias": "Arabic",
+      "size": 10021388,
+      "description": "Arabic",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Arabic.traineddata"
+    },
+    {
+      "name": "Armenian.traineddata",
+      "alias": "Armenian",
+      "size": "8416947",
+      "description": "Armenian",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Armenian.traineddata"
+    },
+    {
+      "name": "Bengali.traineddata",
+      "alias": "Bengali",
+      "size": "6248306",
+      "description": "Bengali",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Bengali.traineddata"
+    },
+    {
+      "name": "Canadian_Aboriginal.traineddata",
+      "alias": "Canadian_Aboriginal",
+      "size": "7180795",
+      "description": "Canadian_Aboriginal",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Canadian_Aboriginal.traineddata"
+    },
+    {
+      "name": "Cherokee.traineddata",
+      "alias": "Cherokee",
+      "size": "4231619",
+      "description": "Cherokee",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Cherokee.traineddata"
+    },
+    {
+      "name": "Cyrillic.traineddata",
+      "alias": "Cyrillic",
+      "size": "29936292",
+      "description": "Cyrillic",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Cyrillic.traineddata"
+    },
+    {
+      "name": "Devanagari.traineddata",
+      "alias": "Devanagari",
+      "size": "18926275",
+      "description": "Devanagari",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Devanagari.traineddata"
+    },
+    {
+      "name": "Ethiopic.traineddata",
+      "alias": "Ethiopic",
+      "size": "9074416",
+      "description": "Ethiopic",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Ethiopic.traineddata"
+    },
+    {
+      "name": "Fraktur.traineddata",
+      "alias": "Fraktur",
+      "size": "10915632",
+      "description": "Fraktur",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Fraktur.traineddata"
+    },
+    {
+      "name": "Georgian.traineddata",
+      "alias": "Georgian",
+      "size": "6949865",
+      "description": "Georgian",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Georgian.traineddata"
+    },
+    {
+      "name": "Greek.traineddata",
+      "alias": "Greek",
+      "size": "3748948",
+      "description": "Greek",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Greek.traineddata"
+    },
+    {
+      "name": "Gujarati.traineddata",
+      "alias": "Gujarati",
+      "size": "5017100",
+      "description": "Gujarati",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Gujarati.traineddata"
+    },
+    {
+      "name": "Gurmukhi.traineddata",
+      "alias": "Gurmukhi",
+      "size": "4906703",
+      "description": "Gurmukhi",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Gurmukhi.traineddata"
+    },
+    {
+      "name": "Hangul.traineddata",
+      "alias": "Hangul",
+      "size": "5409369",
+      "description": "Hangul",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Hangul.traineddata"
+    },
+    {
+      "name": "Hangul_vert.traineddata",
+      "alias": "Hangul_vert",
+      "size": "5951580",
+      "description": "Hangul_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Hangul_vert.traineddata"
+    },
+    {
+      "name": "HanS.traineddata",
+      "alias": "HanS",
+      "size": "5972903",
+      "description": "HanS",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/HanS.traineddata"
+    },
+    {
+      "name": "HanS_vert.traineddata",
+      "alias": "HanS_vert",
+      "size": "5429738",
+      "description": "HanS_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/HanS_vert.traineddata"
+    },
+    {
+      "name": "HanT.traineddata",
+      "alias": "HanT",
+      "size": "5448070",
+      "description": "HanT",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/HanT.traineddata"
+    },
+    {
+      "name": "HanT_vert.traineddata",
+      "alias": "HanT_vert",
+      "size": "5448317",
+      "description": "HanT_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/HanT_vert.traineddata"
+    },
+    {
+      "name": "Hebrew.traineddata",
+      "alias": "Hebrew",
+      "size": "5552737",
+      "description": "Hebrew",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Hebrew.traineddata"
+    },
+    {
+      "name": "Japanese.traineddata",
+      "alias": "Japanese",
+      "size": "6445247",
+      "description": "Japanese",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Japanese.traineddata"
+    },
+    {
+      "name": "Japanese_vert.traineddata",
+      "alias": "Japanese_vert",
+      "size": "6445356",
+      "description": "Japanese_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Japanese_vert.traineddata"
+    },
+    {
+      "name": "Kannada.traineddata",
+      "alias": "Kannada",
+      "size": "7341745",
+      "description": "Kannada",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Kannada.traineddata"
+    },
+    {
+      "name": "Khmer.traineddata",
+      "alias": "Khmer",
+      "size": "5179967",
+      "description": "Khmer",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Khmer.traineddata"
+    },
+    {
+      "name": "Lao.traineddata",
+      "alias": "Lao",
+      "size": "10792435",
+      "description": "Lao",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Lao.traineddata"
+    },
+    {
+      "name": "Latin.traineddata",
+      "alias": "Latin",
+      "size": "90517021",
+      "description": "Latin",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Latin.traineddata"
+    },
+    {
+      "name": "Malayalam.traineddata",
+      "alias": "Malayalam",
+      "size": "9007302",
+      "description": "Malayalam",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Malayalam.traineddata"
+    },
+    {
+      "name": "Myanmar.traineddata",
+      "alias": "Myanmar",
+      "size": "7840489",
+      "description": "Myanmar",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Myanmar.traineddata"
+    },
+    {
+      "name": "Oriya.traineddata",
+      "alias": "Oriya",
+      "size": "5744929",
+      "description": "Oriya",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Oriya.traineddata"
+    },
+    {
+      "name": "Sinhala.traineddata",
+      "alias": "Sinhala",
+      "size": "4782577",
+      "description": "Sinhala",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Sinhala.traineddata"
+    },
+    {
+      "name": "Syriac.traineddata",
+      "alias": "Syriac",
+      "size": "5803220",
+      "description": "Syriac",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Syriac.traineddata"
+    },
+    {
+      "name": "Tamil.traineddata",
+      "alias": "Tamil",
+      "size": "8180232",
+      "description": "Tamil",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Tamil.traineddata"
+    },
+    {
+      "name": "Telugu.traineddata",
+      "alias": "Telugu",
+      "size": "7170436",
+      "description": "Telugu",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Telugu.traineddata"
+    },
+    {
+      "name": "Thaana.traineddata",
+      "alias": "Thaana",
+      "size": "6048323",
+      "description": "Thaana",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Thaana.traineddata"
+    },
+    {
+      "name": "Thai.traineddata",
+      "alias": "Thai",
+      "size": "4806968",
+      "description": "Thai",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Thai.traineddata"
+    },
+    {
+      "name": "Tibetan.traineddata",
+      "alias": "Tibetan",
+      "size": "5699531",
+      "description": "Tibetan",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Tibetan.traineddata"
+    },
+    {
+      "name": "Vietnamese.traineddata",
+      "alias": "Vietnamese",
+      "size": "1667794",
+      "description": "Vietnamese",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/script/Vietnamese.traineddata"
+    },
+    {
+      "name": "afr.traineddata",
+      "alias": "afr",
+      "size": "7851157",
+      "description": "afr",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/afr.traineddata"
+    },
+    {
+      "name": "amh.traineddata",
+      "alias": "amh",
+      "size": "8423467",
+      "description": "amh",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/amh.traineddata"
+    },
+    {
+      "name": "ara.traineddata",
+      "alias": "ara",
+      "size": "2494806",
+      "description": "ara",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ara.traineddata"
+    },
+    {
+      "name": "asm.traineddata",
+      "alias": "asm",
+      "size": "2045457",
+      "description": "asm",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/asm.traineddata"
+    },
+    {
+      "name": "aze.traineddata",
+      "alias": "aze",
+      "size": "10139884",
+      "description": "aze",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/aze.traineddata"
+    },
+    {
+      "name": "aze_cyrl.traineddata",
+      "alias": "aze_cyrl",
+      "size": "4726411",
+      "description": "aze_cyrl",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/aze_cyrl.traineddata"
+    },
+    {
+      "name": "bel.traineddata",
+      "alias": "bel",
+      "size": "11185811",
+      "description": "bel",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/bel.traineddata"
+    },
+    {
+      "name": "ben.traineddata",
+      "alias": "ben",
+      "size": "1789439",
+      "description": "ben",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ben.traineddata"
+    },
+    {
+      "name": "bod.traineddata",
+      "alias": "bod",
+      "size": "1966470",
+      "description": "bod",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/bod.traineddata"
+    },
+    {
+      "name": "bos.traineddata",
+      "alias": "bos",
+      "size": "7930443",
+      "description": "bos",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/bos.traineddata"
+    },
+    {
+      "name": "bre.traineddata",
+      "alias": "bre",
+      "size": "6335020",
+      "description": "bre",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/bre.traineddata"
+    },
+    {
+      "name": "bul.traineddata",
+      "alias": "bul",
+      "size": "8371797",
+      "description": "bul",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/bul.traineddata"
+    },
+    {
+      "name": "cat.traineddata",
+      "alias": "cat",
+      "size": "6502025",
+      "description": "cat",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/cat.traineddata"
+    },
+    {
+      "name": "ceb.traineddata",
+      "alias": "ceb",
+      "size": "2402839",
+      "description": "ceb",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ceb.traineddata"
+    },
+    {
+      "name": "ces.traineddata",
+      "alias": "ces",
+      "size": "16238266",
+      "description": "ces",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ces.traineddata"
+    },
+    {
+      "name": "chi_sim.traineddata",
+      "alias": "chi_sim",
+      "size": "44366093",
+      "description": "chi_sim",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/chi_sim.traineddata"
+    },
+    {
+      "name": "chi_sim_vert.traineddata",
+      "alias": "chi_sim_vert",
+      "size": "2470991",
+      "description": "chi_sim_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/chi_sim_vert.traineddata"
+    },
+    {
+      "name": "chi_tra.traineddata",
+      "alias": "chi_tra",
+      "size": "59025073",
+      "description": "chi_tra",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/chi_tra.traineddata"
+    },
+    {
+      "name": "chi_tra_vert.traineddata",
+      "alias": "chi_tra_vert",
+      "size": "2368306",
+      "description": "chi_tra_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/chi_tra_vert.traineddata"
+    },
+    {
+      "name": "chr.traineddata",
+      "alias": "chr",
+      "size": "1458011",
+      "description": "chr",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/chr.traineddata"
+    },
+    {
+      "name": "cos.traineddata",
+      "alias": "cos",
+      "size": "2299112",
+      "description": "cos",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/cos.traineddata"
+    },
+    {
+      "name": "cym.traineddata",
+      "alias": "cym",
+      "size": "5998144",
+      "description": "cym",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/cym.traineddata"
+    },
+    {
+      "name": "dan.traineddata",
+      "alias": "dan",
+      "size": "10578171",
+      "description": "dan",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/dan.traineddata"
+    },
+    {
+      "name": "dan_frak.traineddata",
+      "alias": "dan_frak",
+      "size": "1622858",
+      "description": "dan_frak",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/dan_frak.traineddata"
+    },
+    {
+      "name": "deu.traineddata",
+      "alias": "deu",
+      "size": "15437534",
+      "description": "deu",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/deu.traineddata"
+    },
+    {
+      "name": "deu_frak.traineddata",
+      "alias": "deu_frak",
+      "size": "1978741",
+      "description": "deu_frak",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/deu_frak.traineddata"
+    },
+    {
+      "name": "deu_latf.traineddata",
+      "alias": "deu_latf",
+      "size": "22874034",
+      "description": "deu_latf",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/deu_latf.traineddata"
+    },
+    {
+      "name": "div.traineddata",
+      "alias": "div",
+      "size": "1774548",
+      "description": "div",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/div.traineddata"
+    },
+    {
+      "name": "dzo.traineddata",
+      "alias": "dzo",
+      "size": "449626",
+      "description": "dzo",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/dzo.traineddata"
+    },
+    {
+      "name": "ell.traineddata",
+      "alias": "ell",
+      "size": "7543380",
+      "description": "ell",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ell.traineddata"
+    },
+    {
+      "name": "eng.traineddata",
+      "alias": "eng",
+      "size": "23466654",
+      "description": "eng",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/eng.traineddata"
+    },
+    {
+      "name": "enm.traineddata",
+      "alias": "enm",
+      "size": "5207312",
+      "description": "enm",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/enm.traineddata"
+    },
+    {
+      "name": "epo.traineddata",
+      "alias": "epo",
+      "size": "11330444",
+      "description": "epo",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/epo.traineddata"
+    },
+    {
+      "name": "equ.traineddata",
+      "alias": "equ",
+      "size": "2251950",
+      "description": "equ",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/equ.traineddata"
+    },
+    {
+      "name": "est.traineddata",
+      "alias": "est",
+      "size": "15301628",
+      "description": "est",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/est.traineddata"
+    },
+    {
+      "name": "eus.traineddata",
+      "alias": "eus",
+      "size": "10145441",
+      "description": "eus",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/eus.traineddata"
+    },
+    {
+      "name": "fao.traineddata",
+      "alias": "fao",
+      "size": "3439785",
+      "description": "fao",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/fao.traineddata"
+    },
+    {
+      "name": "fas.traineddata",
+      "alias": "fas",
+      "size": "561272",
+      "description": "fas",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/fas.traineddata"
+    },
+    {
+      "name": "fil.traineddata",
+      "alias": "fil",
+      "size": "2509440",
+      "description": "fil",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/fil.traineddata"
+    },
+    {
+      "name": "fin.traineddata",
+      "alias": "fin",
+      "size": "21140513",
+      "description": "fin",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/fin.traineddata"
+    },
+    {
+      "name": "fra.traineddata",
+      "alias": "fra",
+      "size": "14213351",
+      "description": "fra",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/fra.traineddata"
+    },
+    {
+      "name": "frm.traineddata",
+      "alias": "frm",
+      "size": "17856636",
+      "description": "frm",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/frm.traineddata"
+    },
+    {
+      "name": "fry.traineddata",
+      "alias": "fry",
+      "size": "1906031",
+      "description": "fry",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/fry.traineddata"
+    },
+    {
+      "name": "gla.traineddata",
+      "alias": "gla",
+      "size": "3068320",
+      "description": "gla",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/gla.traineddata"
+    },
+    {
+      "name": "gle.traineddata",
+      "alias": "gle",
+      "size": "4664254",
+      "description": "gle",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/gle.traineddata"
+    },
+    {
+      "name": "glg.traineddata",
+      "alias": "glg",
+      "size": "8074927",
+      "description": "glg",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/glg.traineddata"
+    },
+    {
+      "name": "grc.traineddata",
+      "alias": "grc",
+      "size": "7428728",
+      "description": "grc",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/grc.traineddata"
+    },
+    {
+      "name": "guj.traineddata",
+      "alias": "guj",
+      "size": "1963128",
+      "description": "guj",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/guj.traineddata"
+    },
+    {
+      "name": "hat.traineddata",
+      "alias": "hat",
+      "size": "3326722",
+      "description": "hat",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/hat.traineddata"
+    },
+    {
+      "name": "heb.traineddata",
+      "alias": "heb",
+      "size": "5413459",
+      "description": "heb",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/heb.traineddata"
+    },
+    {
+      "name": "hin.traineddata",
+      "alias": "hin",
+      "size": "1651010",
+      "description": "hin",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/hin.traineddata"
+    },
+    {
+      "name": "hrv.traineddata",
+      "alias": "hrv",
+      "size": "13797409",
+      "description": "hrv",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/hrv.traineddata"
+    },
+    {
+      "name": "hun.traineddata",
+      "alias": "hun",
+      "size": "18051690",
+      "description": "hun",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/hun.traineddata"
+    },
+    {
+      "name": "hye.traineddata",
+      "alias": "hye",
+      "size": "3594112",
+      "description": "hye",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/hye.traineddata"
+    },
+    {
+      "name": "iku.traineddata",
+      "alias": "iku",
+      "size": "3797385",
+      "description": "iku",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/iku.traineddata"
+    },
+    {
+      "name": "ind.traineddata",
+      "alias": "ind",
+      "size": "8279230",
+      "description": "ind",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ind.traineddata"
+    },
+    {
+      "name": "isl.traineddata",
+      "alias": "isl",
+      "size": "9037703",
+      "description": "isl",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/isl.traineddata"
+    },
+    {
+      "name": "ita.traineddata",
+      "alias": "ita",
+      "size": "15951669",
+      "description": "ita",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ita.traineddata"
+    },
+    {
+      "name": "ita_old.traineddata",
+      "alias": "ita_old",
+      "size": "17345259",
+      "description": "ita_old",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ita_old.traineddata"
+    },
+    {
+      "name": "jav.traineddata",
+      "alias": "jav",
+      "size": "7386965",
+      "description": "jav",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/jav.traineddata"
+    },
+    {
+      "name": "jpn.traineddata",
+      "alias": "jpn",
+      "size": "35659159",
+      "description": "jpn",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/jpn.traineddata"
+    },
+    {
+      "name": "jpn_vert.traineddata",
+      "alias": "jpn_vert",
+      "size": "3039939",
+      "description": "jpn_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/jpn_vert.traineddata"
+    },
+    {
+      "name": "kan.traineddata",
+      "alias": "kan",
+      "size": "3608311",
+      "description": "kan",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kan.traineddata"
+    },
+    {
+      "name": "kat.traineddata",
+      "alias": "kat",
+      "size": "8744377",
+      "description": "kat",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kat.traineddata"
+    },
+    {
+      "name": "kat_old.traineddata",
+      "alias": "kat_old",
+      "size": "1082383",
+      "description": "kat_old",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kat_old.traineddata"
+    },
+    {
+      "name": "kaz.traineddata",
+      "alias": "kaz",
+      "size": "9263539",
+      "description": "kaz",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kaz.traineddata"
+    },
+    {
+      "name": "khm.traineddata",
+      "alias": "khm",
+      "size": "1446906",
+      "description": "khm",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/khm.traineddata"
+    },
+    {
+      "name": "kir.traineddata",
+      "alias": "kir",
+      "size": "15430595",
+      "description": "kir",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kir.traineddata"
+    },
+    {
+      "name": "kmr.traineddata",
+      "alias": "kmr",
+      "size": "3568645",
+      "description": "kmr",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kmr.traineddata"
+    },
+    {
+      "name": "kor.traineddata",
+      "alias": "kor",
+      "size": "15317715",
+      "description": "kor",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kor.traineddata"
+    },
+    {
+      "name": "kor_vert.traineddata",
+      "alias": "kor_vert",
+      "size": "1128590",
+      "description": "kor_vert",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/kor_vert.traineddata"
+    },
+    {
+      "name": "lao.traineddata",
+      "alias": "lao",
+      "size": "7055204",
+      "description": "lao",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/lao.traineddata"
+    },
+    {
+      "name": "lat.traineddata",
+      "alias": "lat",
+      "size": "9215366",
+      "description": "lat",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/lat.traineddata"
+    },
+    {
+      "name": "lav.traineddata",
+      "alias": "lav",
+      "size": "10635271",
+      "description": "lav",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/lav.traineddata"
+    },
+    {
+      "name": "lit.traineddata",
+      "alias": "lit",
+      "size": "12629538",
+      "description": "lit",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/lit.traineddata"
+    },
+    {
+      "name": "ltz.traineddata",
+      "alias": "ltz",
+      "size": "2606439",
+      "description": "ltz",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ltz.traineddata"
+    },
+    {
+      "name": "mal.traineddata",
+      "alias": "mal",
+      "size": "5953416",
+      "description": "mal",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/mal.traineddata"
+    },
+    {
+      "name": "mar.traineddata",
+      "alias": "mar",
+      "size": "3193116",
+      "description": "mar",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/mar.traineddata"
+    },
+    {
+      "name": "mkd.traineddata",
+      "alias": "mkd",
+      "size": "5323418",
+      "description": "mkd",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/mkd.traineddata"
+    },
+    {
+      "name": "mlt.traineddata",
+      "alias": "mlt",
+      "size": "7426902",
+      "description": "mlt",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/mlt.traineddata"
+    },
+    {
+      "name": "mon.traineddata",
+      "alias": "mon",
+      "size": "2137055",
+      "description": "mon",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/mon.traineddata"
+    },
+    {
+      "name": "mri.traineddata",
+      "alias": "mri",
+      "size": "862986",
+      "description": "mri",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/mri.traineddata"
+    },
+    {
+      "name": "msa.traineddata",
+      "alias": "msa",
+      "size": "8243366",
+      "description": "msa",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/msa.traineddata"
+    },
+    {
+      "name": "mya.traineddata",
+      "alias": "mya",
+      "size": "4640591",
+      "description": "mya",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/mya.traineddata"
+    },
+    {
+      "name": "nep.traineddata",
+      "alias": "nep",
+      "size": "2189424",
+      "description": "nep",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/nep.traineddata"
+    },
+    {
+      "name": "nld.traineddata",
+      "alias": "nld",
+      "size": "23163950",
+      "description": "nld",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/nld.traineddata"
+    },
+    {
+      "name": "nor.traineddata",
+      "alias": "nor",
+      "size": "12397893",
+      "description": "nor",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/nor.traineddata"
+    },
+    {
+      "name": "oci.traineddata",
+      "alias": "oci",
+      "size": "6322100",
+      "description": "oci",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/oci.traineddata"
+    },
+    {
+      "name": "ori.traineddata",
+      "alias": "ori",
+      "size": "1480096",
+      "description": "ori",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ori.traineddata"
+    },
+    {
+      "name": "osd.traineddata",
+      "alias": "osd",
+      "size": "10562874",
+      "description": "osd",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/osd.traineddata"
+    },
+    {
+      "name": "pan.traineddata",
+      "alias": "pan",
+      "size": "1698789",
+      "description": "pan",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/pan.traineddata"
+    },
+    {
+      "name": "pol.traineddata",
+      "alias": "pol",
+      "size": "19344135",
+      "description": "pol",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/pol.traineddata"
+    },
+    {
+      "name": "por.traineddata",
+      "alias": "por",
+      "size": "15336931",
+      "description": "por",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/por.traineddata"
+    },
+    {
+      "name": "pus.traineddata",
+      "alias": "pus",
+      "size": "1772117",
+      "description": "pus",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/pus.traineddata"
+    },
+    {
+      "name": "que.traineddata",
+      "alias": "que",
+      "size": "5026349",
+      "description": "que",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/que.traineddata"
+    },
+    {
+      "name": "ron.traineddata",
+      "alias": "ron",
+      "size": "11008634",
+      "description": "ron",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ron.traineddata"
+    },
+    {
+      "name": "rus.traineddata",
+      "alias": "rus",
+      "size": "19920885",
+      "description": "rus",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/rus.traineddata"
+    },
+    {
+      "name": "san.traineddata",
+      "alias": "san",
+      "size": "12404680",
+      "description": "san",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/san.traineddata"
+    },
+    {
+      "name": "sin.traineddata",
+      "alias": "sin",
+      "size": "1727443",
+      "description": "sin",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/sin.traineddata"
+    },
+    {
+      "name": "slk.traineddata",
+      "alias": "slk",
+      "size": "14100356",
+      "description": "slk",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/slk.traineddata"
+    },
+    {
+      "name": "slk_frak.traineddata",
+      "alias": "slk_frak",
+      "size": "845398",
+      "description": "slk_frak",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/slk_frak.traineddata"
+    },
+    {
+      "name": "slv.traineddata",
+      "alias": "slv",
+      "size": "9942454",
+      "description": "slv",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/slv.traineddata"
+    },
+    {
+      "name": "snd.traineddata",
+      "alias": "snd",
+      "size": "1694065",
+      "description": "snd",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/snd.traineddata"
+    },
+    {
+      "name": "spa.traineddata",
+      "alias": "spa",
+      "size": "18256019",
+      "description": "spa",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/spa.traineddata"
+    },
+    {
+      "name": "spa_old.traineddata",
+      "alias": "spa_old",
+      "size": "19628379",
+      "description": "spa_old",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/spa_old.traineddata"
+    },
+    {
+      "name": "sqi.traineddata",
+      "alias": "sqi",
+      "size": "8575759",
+      "description": "sqi",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/sqi.traineddata"
+    },
+    {
+      "name": "srp.traineddata",
+      "alias": "srp",
+      "size": "7434267",
+      "description": "srp",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/srp.traineddata"
+    },
+    {
+      "name": "srp_latn.traineddata",
+      "alias": "srp_latn",
+      "size": "9375025",
+      "description": "srp_latn",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/srp_latn.traineddata"
+    },
+    {
+      "name": "sun.traineddata",
+      "alias": "sun",
+      "size": "1369513",
+      "description": "sun",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/sun.traineddata"
+    },
+    {
+      "name": "swa.traineddata",
+      "alias": "swa",
+      "size": "6029030",
+      "description": "swa",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/swa.traineddata"
+    },
+    {
+      "name": "swe.traineddata",
+      "alias": "swe",
+      "size": "13627152",
+      "description": "swe",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/swe.traineddata"
+    },
+    {
+      "name": "syr.traineddata",
+      "alias": "syr",
+      "size": "2207238",
+      "description": "syr",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/syr.traineddata"
+    },
+    {
+      "name": "tam.traineddata",
+      "alias": "tam",
+      "size": "3353079",
+      "description": "tam",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tam.traineddata"
+    },
+    {
+      "name": "tat.traineddata",
+      "alias": "tat",
+      "size": "1072909",
+      "description": "tat",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tat.traineddata"
+    },
+    {
+      "name": "tel.traineddata",
+      "alias": "tel",
+      "size": "3315170",
+      "description": "tel",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tel.traineddata"
+    },
+    {
+      "name": "tgk.traineddata",
+      "alias": "tgk",
+      "size": "3721580",
+      "description": "tgk",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tgk.traineddata"
+    },
+    {
+      "name": "tgl.traineddata",
+      "alias": "tgl",
+      "size": "7321367",
+      "description": "tgl",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tgl.traineddata"
+    },
+    {
+      "name": "tha.traineddata",
+      "alias": "tha",
+      "size": "1072519",
+      "description": "tha",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tha.traineddata"
+    },
+    {
+      "name": "tir.traineddata",
+      "alias": "tir",
+      "size": "2184930",
+      "description": "tir",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tir.traineddata"
+    },
+    {
+      "name": "ton.traineddata",
+      "alias": "ton",
+      "size": "947262",
+      "description": "ton",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ton.traineddata"
+    },
+    {
+      "name": "tur.traineddata",
+      "alias": "tur",
+      "size": "18750612",
+      "description": "tur",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/tur.traineddata"
+    },
+    {
+      "name": "uig.traineddata",
+      "alias": "uig",
+      "size": "2794302",
+      "description": "uig",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/uig.traineddata"
+    },
+    {
+      "name": "ukr.traineddata",
+      "alias": "ukr",
+      "size": "12408644",
+      "description": "ukr",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/ukr.traineddata"
+    },
+    {
+      "name": "urd.traineddata",
+      "alias": "urd",
+      "size": "1398748",
+      "description": "urd",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/urd.traineddata"
+    },
+    {
+      "name": "uzb.traineddata",
+      "alias": "uzb",
+      "size": "10757098",
+      "description": "uzb",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/uzb.traineddata"
+    },
+    {
+      "name": "uzb_cyrl.traineddata",
+      "alias": "uzb_cyrl",
+      "size": "4905658",
+      "description": "uzb_cyrl",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/uzb_cyrl.traineddata"
+    },
+    {
+      "name": "vie.traineddata",
+      "alias": "vie",
+      "size": "7763728",
+      "description": "vie",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/vie.traineddata"
+    },
+    {
+      "name": "yid.traineddata",
+      "alias": "yid",
+      "size": "4882707",
+      "description": "yid",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/yid.traineddata"
+    },
+    {
+      "name": "yor.traineddata",
+      "alias": "yor",
+      "size": "963413",
+      "description": "yor",
+      "url": "https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/yor.traineddata"
+    }
+  ]
+}

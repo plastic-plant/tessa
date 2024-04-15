@@ -11,7 +11,8 @@ public static class ConfigureServices
     {
         services.AddSingleton<IOcrService, OcrService>();
         services.AddSingleton<ISettingsService, SettingsService>();
+		services.AddSingleton<IDownloadService, DownloadService>();
 
-        return services;
+		return services;
 	}
 }

@@ -7,6 +7,7 @@ namespace Tessa.Application.Services;
 
 public class SettingsService : ISettingsService
 {
+	public AppRegistry Registry { get; private set; } = new();
 	public AppSettings Settings { get; private set; } = new();
 
 	private JsonSerializerOptions _serializerOptions = new(JsonSerializerDefaults.Web)
@@ -20,7 +21,37 @@ public class SettingsService : ISettingsService
 		PreferredObjectCreationHandling = JsonObjectCreationHandling.Populate,
 	};
 
-	public AppSettings Load(string? settingsPath = null)
+	public AppRegistry LoadRegistry()
+	{
+		var filename = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "tessa.registry.json");
+		try
+		{
+			if (File.Exists(filename))
+			{
+				var content = File.ReadAllText(filename);
+				if (!string.IsNullOrWhiteSpace(content))
+				{
+					Registry = JsonSerializer.Deserialize<AppRegistry>(content, _serializerOptions)!;
+				}
+			}
+			else
+			{
+				Settings.Errors.Add($"Could not load registry from {filename}. The file name was matched with {AppDomain.CurrentDomain.BaseDirectory} but not found.");
+			}
+		}
+		catch (JsonException e)
+		{
+			Settings.Errors.Add($"Could not load registry from {filename}. There's an error in the formatting of the JSON content. Please run tessa config to fix. {e.Message}");
+		}
+		catch (Exception)
+		{
+			Settings.Errors.Add($"Could not load registry from {filename}. The file name is not found.");
+		}
+
+		return Registry;
+	}	
+
+	public AppSettings LoadSettings(string? settingsPath = null)
 	{
 		var filename = settingsPath ?? Settings.SettingsPath;
 		try
@@ -60,7 +91,7 @@ public class SettingsService : ISettingsService
 		return Settings;
 	}
 
-	public bool Save(string settingsPath)
+	public bool SaveSettings(string settingsPath)
 	{
 		try
 		{
