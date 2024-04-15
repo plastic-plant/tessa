@@ -91,12 +91,12 @@ public class SettingsService : ISettingsService
 		return Settings;
 	}
 
-	public bool SaveSettings(string settingsPath)
+	public bool SaveSettings(string? settingsPath = null)
 	{
 		try
 		{
 			var json = JsonSerializer.Serialize(Settings, _serializerOptions);
-			File.WriteAllText(settingsPath, json);
+			File.WriteAllText(settingsPath ?? Settings.SettingsPath, json);
 			return true;
 		}
 		catch (Exception e)

@@ -2,15 +2,12 @@
 using Spectre.Console;
 using Spectre.Console.Cli;
 using System.ComponentModel;
-using System.Net;
 using Tessa.Application.Enums;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
-using Tessa.Application.Services;
 using Tessa.Presentation.Console.Enums;
 using static Tessa.Application.Models.AppRegistry;
-using static Tessa.Infrastructure.Repositories.OpenAIModelResponse;
 
 namespace Tessa.Presentation.Console.Commands;
 

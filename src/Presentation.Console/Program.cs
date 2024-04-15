@@ -18,14 +18,23 @@ app.Configure(config =>
 {
 	config.SetApplicationName("tessa");
 	// config.SetInterceptor(new LogInterceptor());
+
+	config
+		.AddCommand<ConfigCommand>("config")
+		.WithDescription("Configures tessa.settings.json.")
+		.WithExample("config")
+		.WithExample("config", "--settings tessa.settings.json");
+
 	config
 		.AddCommand<DownloadCommand>("download")
 		.WithDescription("Downloads language models for OCR and LLM prompting.")
+		.WithExample("download", "llm")
+		.WithExample("download", "llm", "https://huggingface.co/...gguf")
 		.WithExample("download", "tessdata")
 		.WithExample("download", "tessdata", "ita")
 		.WithExample("download", "tessdata", "eng+nld+deu")
-		.WithExample("download", "tessdata", "ita") // 	https://raw.githubusercontent.com/tesseract-ocr/tessdata/main/afr.traineddata
-		.WithExample("download", "llm", "https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B-GGUF/blob/main/Hermes-2-Pro-Mistral-7B.Q4_K_M.gguf");
+		.WithExample("download", "tessdata", "ita")
+		.WithExample("download", "tessdata", "https://raw.githubusercontent.com/...traineddata");
 
 	config
 		.AddCommand<OcrCommand>("ocr")

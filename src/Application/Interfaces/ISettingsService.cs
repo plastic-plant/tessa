@@ -2,13 +2,11 @@
 
 namespace Tessa.Application.Interface;
 
-public interface ISettingsService : ISettingsService<AppSettings>;
-
-public interface ISettingsService<T> where T : class
+public interface ISettingsService
 {
 	AppRegistry Registry { get; }
-	T Settings { get; }
+	AppSettings Settings { get; }
 	AppRegistry LoadRegistry();
-	T LoadSettings(string? settingsPath);
-	bool SaveSettings(string settingsPath);
+	AppSettings LoadSettings(string? settingsPath);
+	bool SaveSettings(string? settingsPath = null);
 }
