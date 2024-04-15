@@ -63,6 +63,14 @@ public class AppSettings
 
 	public class LlmSettings
 	{
+		public class Defaults
+		{
+			public const string ModelsPath = "models";
+		}
+
+		[JsonPropertyName("models")]
+		public string ModelsPath { get; set; } = Defaults.ModelsPath;
+
 		[JsonPropertyName("providers")]
 		public List<IProviderConfig> ProviderConfigurations { get; set; } = ProviderConfig.GetExamples();
 	}

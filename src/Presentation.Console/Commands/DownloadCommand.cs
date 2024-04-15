@@ -10,6 +10,7 @@ using Tessa.Application.Models;
 using Tessa.Application.Services;
 using Tessa.Presentation.Console.Enums;
 using static Tessa.Application.Models.AppRegistry;
+using static Tessa.Infrastructure.Repositories.OpenAIModelResponse;
 
 namespace Tessa.Presentation.Console.Commands;
 
@@ -87,7 +88,7 @@ public class DownloadCommand : AsyncCommand<DownloadCommand.Settings>
 				// Create a temporary new model for download list if a url is given.
 				if (isUrlGiven)
 				{
-					var name = $"Downloaded {Path.GetRandomFileName()}";
+					var name = $"Downloaded {Path.GetRandomFileName()}.tessdata";
 					downloads.Add(new()
 					{
 						Name = name,
@@ -114,12 +115,25 @@ public class DownloadCommand : AsyncCommand<DownloadCommand.Settings>
 				return (int)ExitCode.OK;
 
 			case LanguageModelType.llm:
-				break;
+				var isValidUrl = Uri.TryCreate(settings.NameOrUrl, UriKind.Absolute, out _);
+				if (!isValidUrl)
+				{
+					settings.NameOrUrl = AnsiConsole.Ask<string>("What url should I download the large language model?\n[grey]You can find LLMs at website[/] [blue]huggingface.co[/] [grey](.gguf)[/]", "https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B-GGUF/blob/main/Hermes-2-Pro-Mistral-7B.Q4_K_M.gguf");
+				}
+
+				await AnsiConsole.Progress().StartAsync(async context =>
+				{
+					var progressControl = context.AddTask($"[green]Downloading[/]");
+					string destinationPath = Path.Combine(_settingsService.Settings.Llm.ModelsPath, $"Downloaded {Path.GetRandomFileName()}.gguf");
+					var progressCallback = new Action<double>(percent => progressControl.Value = percent);
+					await _download.DownloadFileAsync(settings.NameOrUrl, destinationPath, progressCallback);
+				});
+				return (int)ExitCode.OK;
 
 			default:
 				break;
 		}
 
-		throw new NotImplementedException();
+		return (int)ExitCode.OK;
 	}
 }

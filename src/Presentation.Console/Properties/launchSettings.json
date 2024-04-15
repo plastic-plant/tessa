@@ -24,6 +24,10 @@
       "commandName": "Project",
       "commandLineArgs": "download tessdata nld+eng"
     },
+    "tessa.exe download llm": {
+      "commandName": "Project",
+      "commandLineArgs": "download llm"
+    },
     "tessa.exe download llm <url>": {
       "commandName": "Project",
       "commandLineArgs": "download llm https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B-GGUF/blob/main/Hermes-2-Pro-Mistral-7B.Q4_K_M.gguf"

@@ -10,6 +10,7 @@
     "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
   },
   "llm": {
+    "models": "models",
     "configs": [
       {
         "name": "jan",

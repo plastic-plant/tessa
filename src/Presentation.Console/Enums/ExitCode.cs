@@ -3,5 +3,5 @@
 public enum ExitCode
 {
 	OK = 0,
-	InvalidInputSettingsPath = 1,
+	InvalidInputSettingsPath = 1
 }
