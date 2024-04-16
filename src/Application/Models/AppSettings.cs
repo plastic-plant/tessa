@@ -72,7 +72,7 @@ public class AppSettings
 		public string ModelsPath { get; set; } = Defaults.ModelsPath;
 
 		[JsonPropertyName("providers")]
-		public List<IProviderConfig> ProviderConfigurations { get; set; } = ProviderConfig.GetExamples();
+		public List<ProviderConfig> ProviderConfigurations { get; set; } = new();
 	}
 	
 	public IProviderConfig? GetSelectedProviderConfiguration() => Llm.ProviderConfigurations.FirstOrDefault(config => string.Equals(config.Name, this.Ocr.SelectedProviderConfigName, StringComparison.OrdinalIgnoreCase));

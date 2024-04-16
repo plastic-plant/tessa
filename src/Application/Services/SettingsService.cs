@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using Tessa.Application.Interface;
 using Tessa.Application.Models;
+using Tessa.Application.Models.ProviderConfigs;
 
 namespace Tessa.Application.Services;
 
@@ -16,9 +17,13 @@ public class SettingsService : ISettingsService
 		PropertyNameCaseInsensitive = true,
 		AllowTrailingCommas = true,
 		NumberHandling = JsonNumberHandling.AllowReadingFromString,
-		Converters = { new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower) },
 		ReadCommentHandling = JsonCommentHandling.Skip,
 		PreferredObjectCreationHandling = JsonObjectCreationHandling.Populate,
+		Converters =
+		{
+			new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower),
+			new ProviderConfigConverter()
+		}
 	};
 
 	public AppRegistry LoadRegistry()
@@ -63,10 +68,10 @@ public class SettingsService : ISettingsService
 
 			if (File.Exists(filename))
 			{
-				var content = File.ReadAllText(filename);
-				if (!string.IsNullOrWhiteSpace(content))
+				var json = File.ReadAllText(filename);
+				if (!string.IsNullOrWhiteSpace(json))
 				{
-					Settings = JsonSerializer.Deserialize<AppSettings>(content, _serializerOptions)!;
+					Settings = JsonSerializer.Deserialize<AppSettings>(json, _serializerOptions)!;
 					Settings.SettingsPath = filename;
 				}
 			}

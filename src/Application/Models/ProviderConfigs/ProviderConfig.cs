@@ -11,7 +11,7 @@ public class ProviderConfig : IProviderConfig
 	public int MaxTokens { get; set; } = -1;
 	public uint? ContextSize { get; set; }
 
-	public static List<IProviderConfig> GetExamples() => new()
+	public static List<ProviderConfig> GetExamples() => new()
 	{
 		new ProviderConfigJan() { Model = "tinyllama-1.1b", ContextSize = 4096, Temperature = 0.7f, MaxTokens = -1 },
 		new ProviderConfigLMStudio() { ContextSize = 16385, Temperature = 0.7f, MaxTokens = -1 }, // gemma-2b-it-q8_0.gguf

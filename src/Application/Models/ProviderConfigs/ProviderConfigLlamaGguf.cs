@@ -13,6 +13,6 @@ namespace Tessa.Application.Models.ProviderConfigs
             Name = "llama";
 			Provider = LlmProvider.Llama;
 			Seed = (uint)DateTime.Now.Ticks;
-		}
-    }
+        }
+	}
 }

@@ -32,6 +32,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 	public override ValidationResult Validate(CommandContext context, Settings settings)
 	{
 		_settingsService.LoadSettings(settings.SettingsPath);
+		_settingsService.LoadRegistry();
 		return base.Validate(context, settings);
 	}
 
@@ -62,7 +63,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 	private ConfigMenu ShowMainMenu()
 	{
 		AnsiConsole.Clear();
-		var choice = AnsiConsole
+		var answer = AnsiConsole
 			.Prompt(new SelectionPrompt<string>()
 			.Title("\nWelcome to [underline green]tessa config[/]. I'm here to help you update settings in [purple]tessa.settings.json[/].\n")
 			.PageSize(10)
@@ -79,7 +80,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 				"Q. Quit configuration"
 			));
 
-		return choice[0] switch
+		return answer[0] switch
 		{
 			'1' => ConfigMenu.ChangeLogPath,
 			'2' => ConfigMenu.ChangeInputPath,
@@ -100,17 +101,17 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		AnsiConsole.Clear();
 		AnsiConsole.MarkupLine($"\nPress Enter to save the current configured default.\n\n");
 		var textPath = new TextPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _settingsService.Settings.LogPath))
-			.RootColor(Color.Red)
-			.SeparatorColor(Color.Green)
-			.StemColor(Color.Blue)
-			.LeafColor(Color.Yellow);
+						.RootColor(Color.Red)
+						.SeparatorColor(Color.Green)
+						.StemColor(Color.Blue)
+						.LeafColor(Color.Yellow);
 		var panel = new Panel(textPath);
-		panel.Header = new PanelHeader("1. Change the path where [lightskyblue1]log files[/] are written");
-		panel.Border = BoxBorder.Rounded;
-		panel.Expand = true;
-		AnsiConsole.Write(panel);
+					panel.Header = new PanelHeader("1. Change the path where [lightskyblue1]log files[/] are written");
+					panel.Border = BoxBorder.Rounded;
+					panel.Expand = true;
+					AnsiConsole.Write(panel);
 
-		var answer = AnsiConsole.Ask<string>("\n\n", _settingsService.Settings.LogPath);
+					var answer = AnsiConsole.Ask<string>("\n\n", _settingsService.Settings.LogPath);
 		_settingsService.Settings.LogPath = answer;
 		_settingsService.SaveSettings();
 
@@ -162,7 +163,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 	}
 
 	private ConfigMenu ShowMenu4_ChangeOcrModelsPath()
-	{
+					{
 		AnsiConsole.Clear();
 		AnsiConsole.MarkupLine($"\nPress Enter to save the current configured default.\n\n");
 		var textPath = new TextPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _settingsService.Settings.Ocr.TessdataPath))
@@ -181,8 +182,8 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		_settingsService.SaveSettings();
 
 		return ConfigMenu.MainMenu;
-	}
-	
+					}
+
 	private ConfigMenu ShowMenu5_ChangeLlmModelsPath()
 	{
 		AnsiConsole.Clear();
@@ -209,37 +210,68 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 	{
 		AnsiConsole.Clear();
 		var choices = Enum.GetValues(typeof(OcrEngine)).Cast<OcrEngine>();
-		var choice = AnsiConsole
+		var answer = AnsiConsole
 			.Prompt(new SelectionPrompt<OcrEngine>()
 				.Title($"6. Change the [lightskyblue1]OCR engine[/] selected: [green]{_settingsService.Settings.Ocr.Engine}[/]\n")
 				.PageSize(10)
 				.AddChoices(choices)
 			);
 
-		_settingsService.Settings.Ocr.Engine = choice;
+		_settingsService.Settings.Ocr.Engine = answer;
 		_settingsService.SaveSettings();
 
 		return ConfigMenu.MainMenu;
 	}
 
-	private ConfigMenu ShowMenu7_ChangeOcrModel() // 7. Change the [lightskyblue1]OCR language[/] models: [green]{_settingsService.Settings.Ocr.TessdataLanguage}[/]
+	private ConfigMenu ShowMenu7_ChangeOcrModel()
 	{
 		AnsiConsole.Clear();
 		AnsiConsole.MarkupLine($"\nPress Enter to save the current configured default.\n\n");
+		var choices = _settingsService.Registry.Tessdata.Select(model => model.Alias);
+		var answers = AnsiConsole
+			.Prompt(new  MultiSelectionPrompt<string>()
+				.Title($"7. Change the [lightskyblue1]OCR language[/] models: [green]{_settingsService.Settings.Ocr.TessdataLanguage}[/]\n")
+				.MoreChoicesText("[grey](Move up and down to scroll through more language models.)[/]")
+				.PageSize(20)
+				.AddChoices(choices)
+			);
+
+		_settingsService.Settings.Ocr.TessdataLanguage = string.Join('+', answers);
+		_settingsService.SaveSettings();
+
 		return ConfigMenu.MainMenu;
 	}
 
-	private ConfigMenu ShowMenu8_ChangeLlmProvider() // 8. Change the [lightskyblue1]LLM prompting[/] model: [green]{_settingsService.Settings.Ocr.SelectedProviderConfigName}[/]
+	private ConfigMenu ShowMenu8_ChangeLlmProvider()
 	{
 		AnsiConsole.Clear();
 		AnsiConsole.MarkupLine($"\nPress Enter to save the current configured default.\n\n");
+		var choices = _settingsService.Settings.Llm.ProviderConfigurations.Select(model => model.Name ?? "");
+		var answer = AnsiConsole
+			.Prompt(new SelectionPrompt<string>()
+				.Title($"8. Change the [lightskyblue1]LLM prompting[/] model: [green]{_settingsService.Settings.Ocr.SelectedProviderConfigName}[/]\n")
+				.MoreChoicesText("[grey](Move up and down to scroll through more language models.)[/]")
+				.PageSize(10)
+				.AddChoices(choices)
+			);
+
+		_settingsService.Settings.Ocr.SelectedProviderConfigName = answer;
+		_settingsService.SaveSettings();
+
 		return ConfigMenu.MainMenu;
 	}
 
-	private ConfigMenu ShowMenu9_ChangeOcrPrompt() // 9. Change the cleanup strategy and [lightskyblue1]prompt to optimize[/] text readouts
+	private ConfigMenu ShowMenu9_ChangeOcrPrompt()
 	{
 		AnsiConsole.Clear();
-		AnsiConsole.MarkupLine($"\nPress Enter to save the current configured default.\n\n");
+
+		var answer = AnsiConsole.Ask<string>("9. Change the cleanup strategy and [lightskyblue1]prompt to optimize[/] text readouts.\n\n[grey]Press Enter to save the current configured default: [/]", _settingsService.Settings.Ocr.CleanupPrompt);
+		if (!string.IsNullOrWhiteSpace(answer))
+		{
+			_settingsService.Settings.Ocr.CleanupPrompt = answer;
+			_settingsService.SaveSettings();
+		}
+
 		return ConfigMenu.MainMenu;
 	}
 }

@@ -7,80 +7,81 @@
     "tessdata": "tessdata",
     "lang": "eng",
     "llm": "lmstudio",
-    "prompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text: "
+    "maxPrompt": 200,
+    "cleanupPrompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text:\n"
   },
   "llm": {
     "models": "models",
-    "configs": [
+    "providers": [
       {
+        "host": "http://localhost:1337",
+        "apikey": "",
+        "model": "tinyllama-1.1b",
         "name": "jan",
         "provider": "jan",
-        "contextSize": 4096,
         "temperature": 0.7,
         "maxTokens": -1,
-        "maxPrompt": 500
+        "contextSize": 4096
       },
       {
+        "host": "http://localhost:1234",
+        "apikey": "",
+        "model": "",
         "name": "lmstudio",
         "provider": "lmstudio",
-        "contextSize": 16385,
         "temperature": 0.7,
         "maxTokens": 4096,
-        "maxPrompt": 200
+        "contextSize": 16385
       },
       {
+        "host": "https://api.openai.com",
+        "apikey": "YOUR_API_KEY",
+        "model": "gpt-3.5-turbo",
         "name": "openai",
         "provider": "openai",
-        "model": "gpt-3.5-turbo",
-        "apikey": "YOUR_API_KEY",
-        "contextSize": 16385,
         "temperature": 0.7,
         "maxTokens": 4096,
-        "maxPrompt": 200
+        "contextSize": 16385
       },
       {
+        "model": "models\\wizardLM-7B.Q8_0.gguf",
+        "gpuLayerCount": 5,
+        "seed": 4200,
         "name": "wizardLM-7B",
         "provider": "llama",
-        "model": "models\\wizardLM-7B.Q8_0.gguf",
-        "contextSize": 2048,
-        "seed": 4200,
-        "gpuLayerCount": 5,
         "temperature": 0.7,
         "maxTokens": -1,
-        "maxPrompt": 200
+        "contextSize": 2048
       },
       {
+        "model": "models\\llama-2-7b-chat.Q3_K_M.gguf",
+        "gpuLayerCount": 5,
+        "seed": 4200,
         "name": "llama-2-7b-chat",
         "provider": "llama",
-        "model": "models\\llama-2-7b-chat.Q3_K_M.gguf",
-        "contextSize": 4096,
-        "seed": 4200,
-        "gpuLayerCount": 5,
         "temperature": 0.7,
         "maxTokens": -1,
-        "maxPrompt": 200
+        "contextSize": 4096
       },
       {
+        "model": "models\\gemma-2b-it.gguf",
+        "gpuLayerCount": 5,
+        "seed": 4200,
         "name": "gemma-2b-it",
         "provider": "llama",
-        "model": "models\\gemma-2b-it.gguf",
-        "contextSize": 1024,
-        "seed": 4200,
-        "gpuLayerCount": 5,
         "temperature": 0.6,
         "maxTokens": -1,
-        "maxPrompt": 200
+        "contextSize": 1024
       },
       {
+        "model": "models\\geitje-7b-ultra.Q8_0.gguf",
+        "gpuLayerCount": 5,
+        "seed": 4200,
         "name": "geitje-7b-ultra",
         "provider": "llama",
-        "model": "models\\geitje-7b-ultra.Q8_0.gguf",
-        "contextSize": 32768,
-        "seed": 4200,
-        "gpuLayerCount": 5,
         "temperature": 0.6,
         "maxTokens": -1,
-        "maxPrompt": 200
+        "contextSize": 32768
       }
     ]
   }
