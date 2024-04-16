@@ -100,17 +100,17 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		AnsiConsole.Clear();
 		AnsiConsole.MarkupLine($"\nPress Enter to save the current configured default.\n\n");
 		var textPath = new TextPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _settingsService.Settings.LogPath))
-			.RootColor(Color.Red)
-			.SeparatorColor(Color.Green)
-			.StemColor(Color.Blue)
-			.LeafColor(Color.Yellow);
+						.RootColor(Color.Red)
+						.SeparatorColor(Color.Green)
+						.StemColor(Color.Blue)
+						.LeafColor(Color.Yellow);
 		var panel = new Panel(textPath);
-		panel.Header = new PanelHeader("1. Change the path where [lightskyblue1]log files[/] are written");
-		panel.Border = BoxBorder.Rounded;
-		panel.Expand = true;
-		AnsiConsole.Write(panel);
+					panel.Header = new PanelHeader("1. Change the path where [lightskyblue1]log files[/] are written");
+					panel.Border = BoxBorder.Rounded;
+					panel.Expand = true;
+					AnsiConsole.Write(panel);
 
-		var answer = AnsiConsole.Ask<string>("\n\n", _settingsService.Settings.LogPath);
+					var answer = AnsiConsole.Ask<string>("\n\n", _settingsService.Settings.LogPath);
 		_settingsService.Settings.LogPath = answer;
 		_settingsService.SaveSettings();
 
@@ -162,7 +162,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 	}
 
 	private ConfigMenu ShowMenu4_ChangeOcrModelsPath()
-	{
+					{
 		AnsiConsole.Clear();
 		AnsiConsole.MarkupLine($"\nPress Enter to save the current configured default.\n\n");
 		var textPath = new TextPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _settingsService.Settings.Ocr.TessdataPath))
@@ -181,8 +181,8 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		_settingsService.SaveSettings();
 
 		return ConfigMenu.MainMenu;
-	}
-	
+					}
+
 	private ConfigMenu ShowMenu5_ChangeLlmModelsPath()
 	{
 		AnsiConsole.Clear();
@@ -203,7 +203,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		_settingsService.SaveSettings();
 
 		return ConfigMenu.MainMenu;
-	}
+			}
 
 	private ConfigMenu ShowMenu6_ChangeOcrEngine()
 	{
@@ -220,7 +220,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		_settingsService.SaveSettings();
 
 		return ConfigMenu.MainMenu;
-	}
+		}
 
 	private ConfigMenu ShowMenu7_ChangeOcrModel() // 7. Change the [lightskyblue1]OCR language[/] models: [green]{_settingsService.Settings.Ocr.TessdataLanguage}[/]
 	{
