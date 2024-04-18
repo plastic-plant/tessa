@@ -204,7 +204,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		_settingsService.SaveSettings();
 
 		return ConfigMenu.MainMenu;
-	}
+			}
 
 	private ConfigMenu ShowMenu6_ChangeOcrEngine()
 	{
@@ -221,7 +221,7 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 		_settingsService.SaveSettings();
 
 		return ConfigMenu.MainMenu;
-	}
+		}
 
 	private ConfigMenu ShowMenu7_ChangeOcrModel()
 	{
