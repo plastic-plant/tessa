@@ -3,6 +3,7 @@
 public enum LlmProvider
 {
 	Unknown,
+	None,
 
 	/// <summary>
 	/// Jan API: https://jan.ai/api-reference

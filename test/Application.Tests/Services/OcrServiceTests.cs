@@ -38,7 +38,7 @@ namespace Application.Tests.Services
 			var logger = new Mock<ILogger<OcrService>>();
 			var settings = new Mock<ISettingsService>();
 			var files = new Mock<IFileRepository>();
-			var tesseract = new Mock<ITesseractRepository>();			
+			var tesseract = new Mock<ITesseractOcrRepository>();
 			settings
 				.Setup(settings => settings.Settings)
 				.Returns(new AppSettings { Ocr = new AppSettings.OcrSettings { Engine = OcrEngine.Tesseract } });
@@ -65,7 +65,7 @@ namespace Application.Tests.Services
 			var logger = new Mock<ILogger<OcrService>>();
 			var settings = new Mock<ISettingsService>();
 			var files = new Mock<IFileRepository>();
-			var tesseract = new Mock<ITesseractRepository>();			
+			var tesseract = new Mock<ITesseractOcrRepository>();			
 			settings
 				.Setup(settings => settings.Settings)
 				.Returns(new AppSettings { Ocr = new AppSettings.OcrSettings { Engine = OcrEngine.Tesseract } });
@@ -73,7 +73,7 @@ namespace Application.Tests.Services
 				.Setup(files => files.GetFilesSummary(It.IsAny<string>(), SearchOption.AllDirectories, FileOrder.Alphabetical))
 				.Returns(new List<FileSummary> { new FileSummary() });
 			var services = new ServiceCollection();
-			services.AddSingleton<ITesseractRepository>(tesseract.Object);
+			services.AddSingleton<ITesseractOcrRepository>(tesseract.Object);
 			var provider = services.BuildServiceProvider();
 			var sut = new OcrService(logger.Object, provider, settings.Object, files.Object);
 

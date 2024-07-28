@@ -2,5 +2,6 @@
 
 public enum OcrEngine
 {
-	Tesseract
+	Tesseract,
+	Florence
 }

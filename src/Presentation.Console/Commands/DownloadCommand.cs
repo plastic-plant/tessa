@@ -16,6 +16,7 @@ public class DownloadCommand : AsyncCommand<DownloadCommand.Settings>
 	private readonly ILogger<OcrCommand> _logger;
 	private readonly ISettingsService _settingsService;
 	private readonly IDownloadService _download;
+	private readonly IFlorenceOcrRepository _florence;
 
 	public class Settings: LogCommandSettings
 	{
@@ -31,11 +32,12 @@ public class DownloadCommand : AsyncCommand<DownloadCommand.Settings>
 		public required string SettingsPath { get; set; }
 	}
 
-	public DownloadCommand(ILogger<OcrCommand> logger, ISettingsService settingsService, IDownloadService download)
+	public DownloadCommand(ILogger<OcrCommand> logger, ISettingsService settingsService, IDownloadService download, IFlorenceOcrRepository florence)
 	{
 		_logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		_settingsService = settingsService ?? throw new ArgumentNullException(nameof(settingsService));
 		_download = download ?? throw new ArgumentNullException(nameof(download));
+		_florence = florence ?? throw new ArgumentNullException(nameof(florence));
 	}
 
 	public override ValidationResult Validate(CommandContext context, Settings settings)
@@ -78,7 +80,7 @@ public class DownloadCommand : AsyncCommand<DownloadCommand.Settings>
 				// Add choices for a list of given model alias names on command-line (eng+nld+greek)
 				if (isAliasGiven)
 				{
-					var entries = settings.NameOrUrl.Split("+", StringSplitOptions.TrimEntries);
+					var entries = settings.NameOrUrl?.Split("+", StringSplitOptions.TrimEntries) ?? Array.Empty<string>();
 					choices.AddRange(entries);
 				}
 
@@ -90,7 +92,7 @@ public class DownloadCommand : AsyncCommand<DownloadCommand.Settings>
 					{
 						Name = name,
 						Alias = name,
-						Url = settings.NameOrUrl
+						Url = settings.NameOrUrl ?? string.Empty
 					});
 				}
 
@@ -112,18 +114,37 @@ public class DownloadCommand : AsyncCommand<DownloadCommand.Settings>
 				return (int)ExitCode.OK;
 
 			case LanguageModelType.llm:
-				var isValidUrl = Uri.TryCreate(settings.NameOrUrl, UriKind.Absolute, out _);
-				if (!isValidUrl)
+				bool isFlorenceAlias = settings.NameOrUrl?.Contains("florence-2", StringComparison.InvariantCultureIgnoreCase) ?? false;
+				if (isFlorenceAlias)
 				{
-					settings.NameOrUrl = AnsiConsole.Ask<string>("What url should I download the large language model?\n[grey]You can find LLMs at website[/] [blue]huggingface.co[/] [grey](.gguf)[/]", "https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B-GGUF/blob/main/Hermes-2-Pro-Mistral-7B.Q4_K_M.gguf");
+					var status = _florence.IsReady();
+					if (status.ready)
+					{
+						AnsiConsole.MarkupLine("[green]Florence-2[/] [grey]model is already downloaded and ready for use.[/]");
+						return (int)ExitCode.OK;
+					}
+				}
+
+				var isValidUrl = Uri.TryCreate(settings.NameOrUrl, UriKind.Absolute, out _);
+				var shouldAsk = !isFlorenceAlias && !isValidUrl;
+				if (shouldAsk)
+				{
+					settings.NameOrUrl = AnsiConsole.Ask<string>("What url should I download the large language model from?\n[grey]You can find LLMs at website[/] [blue]huggingface.co[/] [grey](.gguf)[/]", "https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B-GGUF/blob/main/Hermes-2-Pro-Mistral-7B.Q4_K_M.gguf");
 				}
 
 				await AnsiConsole.Progress().StartAsync(async context =>
 				{
 					var progressControl = context.AddTask($"[green]Downloading[/]");
-					string destinationPath = Path.Combine(_settingsService.Settings.Llm.ModelsPath, $"Downloaded {Path.GetRandomFileName()}.gguf");
 					var progressCallback = new Action<double>(percent => progressControl.Value = percent);
-					await _download.DownloadFileAsync(settings.NameOrUrl, destinationPath, progressCallback);
+					if (isFlorenceAlias)
+					{
+						await _florence.DownloadModelsAsync(progressCallback);
+					}
+					if (isValidUrl)
+					{
+						string destinationPath = Path.Combine(_settingsService.Settings.Llm.ModelsPath, $"Downloaded {Path.GetRandomFileName()}.gguf");
+						await _download.DownloadFileAsync(settings.NameOrUrl, destinationPath, progressCallback);
+					}
 				});
 				return (int)ExitCode.OK;
 

@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Florence2" Version="24.7.50588" />
         <PackageReference Include="itext7" Version="8.0.5" />
         <PackageReference Include="LLamaSharp" Version="0.14.0" />
         <PackageReference Include="LLamaSharp.Backend.Cpu" Version="0.14.0" />
@@ -79,6 +80,9 @@
       <None Update="input\example-3.pdf">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="input\example-5.jpg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
@@ -95,6 +99,10 @@
 
     <ItemGroup>
       <NativeLibs Remove="models\_empty.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <NativeLibs Remove="Repositories\FlorenceRepository.cs" />
     </ItemGroup>
 
 </Project>

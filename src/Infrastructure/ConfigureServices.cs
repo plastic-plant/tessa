@@ -12,7 +12,8 @@ public static class ConfigureServices
 	{
 		services.AddSingleton<IFileRepository, FileRepository>();
 		services.AddSingleton<ILlamaRepository, LlamaRepository>();
-		services.AddSingleton<ITesseractRepository, TesseractRepository>();
+		services.AddSingleton<ITesseractOcrRepository, TesseractRepository>();
+		services.AddSingleton<IFlorenceOcrRepository, FlorenceRepository>();
 		services.AddSingleton<IOpenAIRepository, OpenAIRepository>();
 
 		return services;

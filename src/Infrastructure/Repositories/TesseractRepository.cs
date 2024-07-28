@@ -12,7 +12,7 @@ using Tesseract;
 
 namespace Tessa.Infrastructure.Tesseract;
 
-public class TesseractRepository : ITesseractRepository
+public class TesseractRepository : ITesseractOcrRepository
 {
 	private readonly ILogger<TesseractRepository> _logger;
 	private readonly IServiceProvider _services;

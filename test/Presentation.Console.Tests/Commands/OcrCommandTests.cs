@@ -33,7 +33,7 @@ public class OcrCommandTests
 			.Returns(new OcrSummary() { Errors = givenNoErrors });
 		var command = new OcrCommand(logger.Object, settingsService.Object, ocrService.Object);
 		var remaining = new Mock<IRemainingArguments>();
-		var context = new CommandContext(remaining.Object, "ocr", null);
+		var context = new CommandContext(Array.Empty<string>(), remaining.Object, "ocr", null);
 
 		var actual = command.Validate(context, _defaultSettings);
 
@@ -57,7 +57,7 @@ public class OcrCommandTests
 			.Returns(new OcrSummary() { Errors = givenSomeErrors });
 		var command = new OcrCommand(logger.Object, settingsService.Object, ocrService.Object);
 		var remaining = new Mock<IRemainingArguments>();
-		var context = new CommandContext(remaining.Object, "ocr", null);
+		var context = new CommandContext(Array.Empty<string>(), remaining.Object, "ocr", null);
 
 		var actual = command.Validate(context, _defaultSettings);
 

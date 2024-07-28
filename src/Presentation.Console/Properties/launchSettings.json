@@ -24,6 +24,11 @@
       "commandName": "Project",
       "commandLineArgs": "download tessdata nld+eng"
     },
+    "tessa.exe download tessdata --help": {
+      "commandName": "Project",
+      "commandLineArgs": "download tessdata --help"
+    },
+
     "tessa.exe download llm": {
       "commandName": "Project",
       "commandLineArgs": "download llm"
@@ -32,9 +37,9 @@
       "commandName": "Project",
       "commandLineArgs": "download llm https://huggingface.co/NousResearch/Hermes-2-Pro-Mistral-7B-GGUF/blob/main/Hermes-2-Pro-Mistral-7B.Q4_K_M.gguf"
     },
-    "tessa.exe download tessdata --help": {
+    "tessa.exe download llm florence-2": {
       "commandName": "Project",
-      "commandLineArgs": "download tessdata --help"
+      "commandLineArgs": "download llm florence-2"
     },
 
     "tessa.exe ocr": {

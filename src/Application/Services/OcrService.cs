@@ -16,7 +16,8 @@ public class OcrService: IOcrService
 	private readonly ISettingsService _settings;
 	private readonly IFileRepository _files;
 
-	private ITesseractRepository? _tesseract;
+	private ITesseractOcrRepository? _tesseract;
+	private IFlorenceOcrRepository? _florence;
 	private ILlamaRepository? _llama;
 	private IOpenAIRepository? _openai;
 
@@ -34,22 +35,32 @@ public class OcrService: IOcrService
 	{
 		var summary = new OcrSummary();
 
-		// Validate avilability of paths.
+		// Validate availability of paths.
 		var path = _files.GetPathSummary(_settings.Settings.Ocr.InputPath);
 		if (!path.IsExistingDirectory && !path.IsExistingFile)
 		{
 			summary.Errors.Add($"Could not open folder or file {path.PathRooted}.");
+			return summary;
 		}
 
 		// Validate availability of OCR engine.
 		switch (_settings.Settings.Ocr.Engine)
 		{
 			case OcrEngine.Tesseract:
-				_tesseract = _tesseract ?? _services.GetService<ITesseractRepository>();
-				var status = _tesseract!.IsReady();
-				if (!status.ready)
+				_tesseract = _tesseract ?? _services.GetService<ITesseractOcrRepository>();
+				var tesseractStatus = _tesseract!.IsReady();
+				if (!tesseractStatus.ready)
 				{
-					summary.Errors.Add($"Could not start Tesseract engine: {status.error}");
+					summary.Errors.Add($"Could not start Tesseract engine: {tesseractStatus.error}");
+				}
+				break;
+
+			case OcrEngine.Florence:
+				_florence = _florence ?? _services.GetRequiredService<IFlorenceOcrRepository>();
+				var florenceStatus = _florence!.IsReady();
+				if (!florenceStatus.ready)
+				{
+					summary.Errors.Add($"Could not open Florence model: {florenceStatus.error}");
 				}
 				break;
 		}
@@ -58,6 +69,9 @@ public class OcrService: IOcrService
 		var config = _settings.Settings.GetSelectedProviderConfiguration();
 		switch (config?.Provider)
 		{
+			case LlmProvider.None:
+				break;
+
 			case LlmProvider.Llama:
 				_llama = _llama ?? _services.GetRequiredService<ILlamaRepository>();
 				(bool ready, string? error) = _llama.IsReady();
@@ -103,21 +117,30 @@ public class OcrService: IOcrService
 			summary.CurrentFile = file;
 			summary.CurrentFilePosition = ++position;
 
-			// Process file with OCR engine.
+			// Workflow 1. Process file with OCR.
 			switch (_settings.Settings.Ocr.Engine)
 			{
 				case OcrEngine.Tesseract:
-					_tesseract = _tesseract ?? _services.GetRequiredService<ITesseractRepository>();
+					_tesseract = _tesseract ?? _services.GetRequiredService<ITesseractOcrRepository>();
 					_logger.LogInformation($"Processing file {position} with Tesseract.", file.FileName);
 					file.OcrProcessingStatus = OcrProcessingStatus.Processing;
 					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
 					_tesseract.Process(file);
 					break;
+
+					case OcrEngine.Florence:
+					_florence = _florence ?? _services.GetRequiredService<IFlorenceOcrRepository>();
+					_logger.LogInformation($"Processing file {position} with Florence.", file.FileName);
+					file.OcrProcessingStatus = OcrProcessingStatus.Processing;
+					ProgressChanged?.Invoke(this, new ProgressEventArgs(summary));
+					_florence.Process(file);
+					break;
+				
 				default:
 					break;
 			}
 
-			// Process file with LLM prompting.
+			// Worklfow 2. Post-process text with LLM prompting.
 			var llmConfig = _settings.Settings.GetSelectedProviderConfiguration() as ProviderConfig;
 			_logger.LogInformation($"Optimizing file {file.FileName} with prompting.");
 			file.OcrProcessingStatus = OcrProcessingStatus.Optimizing;
@@ -137,6 +160,8 @@ public class OcrService: IOcrService
 					await _openai.ProcessAsync(file);
 					break;
 
+				case LlmProvider.Unknown:
+				case LlmProvider.None:
 				default:
 					break;
 			}
