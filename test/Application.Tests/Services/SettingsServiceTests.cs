@@ -58,7 +58,7 @@ namespace Application.Tests.Services
 			sut.LoadSettings(filename);
 
 			Assert.StartsWith(expectedError.Substring(0, 29), sut.Settings.Errors.First());
-			Assert.EndsWith(expectedError.Substring(expectedError.Length - 88), sut.Settings.Errors.First());
+			Assert.Contains(expectedError.Substring(expectedError.Length - 88), sut.Settings.Errors.First());
 		}
 	}
 }

@@ -27,7 +27,7 @@ public class LlamaRepository: ILlamaRepository
 
 	public (bool ready, string? error) IsReady()
 	{
-		_config = _config ?? _settings.Settings.GetSelectedProviderConfiguration() as ProviderConfigLlamaGguf;
+		_config = _config ?? _settings.Settings?.GetSelectedProviderConfiguration() as ProviderConfigLlamaGguf;
 		try
 		{
 			var executor = GetModelProvider();

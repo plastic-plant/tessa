@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using Tessa.Application.Converters;
 using Tessa.Application.Interface;
 using Tessa.Application.Models;
-using Tessa.Application.Models.ProviderConfigs;
 
 namespace Tessa.Application.Services;
 
@@ -21,7 +21,7 @@ public class SettingsService : ISettingsService
 		PreferredObjectCreationHandling = JsonObjectCreationHandling.Populate,
 		Converters =
 		{
-			new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower),
+			new LowercaseJsonStringEnumConverter(),
 			new ProviderConfigConverter()
 		}
 	};

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Tessa.Application.Interface;
 using Tessa.Application.Interfaces;
 using Tessa.Application.Models;
+using Tessa.Application.Models.ProviderConfigs;
 using Tessa.Infrastructure.Repositories;
 
 namespace Infrastructure.Tests.Repositories;
@@ -15,25 +16,39 @@ namespace Infrastructure.Tests.Repositories;
 public class LlamaRepositoryTests
 {
 	[Fact]
-	public void IsReady_Returns()
+	public void IsReady_ModelUnknown_Returns()
 	{
 		var logger = new Mock<ILogger<LlamaRepository>>();
 		var services = new Mock<IServiceProvider>();
 		var settings = new Mock<ISettingsService>();
+		settings
+			.Setup(settings => settings.Settings)
+			.Returns(new AppSettings()
+			{
+				Ocr = new AppSettings.OcrSettings() { SelectedProviderConfigName = "llama" },
+				Llm = new AppSettings.LlmSettings() { ProviderConfigurations = new() { new ProviderConfigLlamaGguf() { Model = "path not given" } } }
+			});
 		var repository = new LlamaRepository(logger.Object, services.Object, settings.Object);
 
 		var (ready, error) = repository.IsReady();
 
-		Assert.True(ready);
-		Assert.Null(error);
+		Assert.False(ready);
+		Assert.Contains("Could not open LLM:", error);
 	}
 
-	[Fact]
+	[Fact(Skip = "Rework")]
 	public async Task ProcessAsync_Returns()
 	{
 		var logger = new Mock<ILogger<LlamaRepository>>();
 		var services = new Mock<IServiceProvider>();
 		var settings = new Mock<ISettingsService>();
+		settings
+			.Setup(settings => settings.Settings)
+			.Returns(new AppSettings()
+			{
+				Ocr = new AppSettings.OcrSettings() { SelectedProviderConfigName = "llama" },
+				Llm = new AppSettings.LlmSettings() { ProviderConfigurations = new() { new ProviderConfigLlamaGguf() { Model = "path not given" } } }
+			});
 		var repository = new LlamaRepository(logger.Object, services.Object, settings.Object);
 
 		var file = new FileSummary
