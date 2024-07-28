@@ -35,7 +35,7 @@ public class AppSettings
 			public const string ModelsPath = "models";
 			public const string SelectedProviderConfigName = "geitje-7b-ultra";
 			public const int MaxPrompt = 500;
-			public const string CleanupPrompt = "Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text. Here's the text:\n";
+			public const string CleanupPrompt = "Clean up text. Avoid confirmation messages in your response. If you can't provide an answer, leave the response empty. Answer in the language of given text. Here's the text: <CONTENT>\n";
 		}
 
 		[JsonPropertyName("in")]
@@ -58,9 +58,6 @@ public class AppSettings
 
 		[JsonPropertyName("llm")]
 		public string SelectedProviderConfigName { get; set; } = Defaults.SelectedProviderConfigName;
-
-		public int MaxPrompt { get; set; } = 200;
-		public string CleanupPrompt { get; set; } = Defaults.CleanupPrompt;
     }
 
     public LlmSettings Llm { get; set; } = new();

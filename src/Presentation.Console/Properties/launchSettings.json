@@ -52,7 +52,7 @@
     },
     "tessa.exe ocr --in file.png --out file.txt": {
       "commandName": "Project",
-      "commandLineArgs": "ocr --in file.png --out file.txt"
+      "commandLineArgs": "ocr --in input/example1.png --out output/example1.txt"
     }
   }
 }

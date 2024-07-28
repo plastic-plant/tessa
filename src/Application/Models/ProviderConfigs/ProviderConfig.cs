@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Tessa.Application.Enums;
+using static Tessa.Application.Models.AppSettings;
 
 namespace Tessa.Application.Models.ProviderConfigs;
 
@@ -10,6 +11,8 @@ public class ProviderConfig : IProviderConfig
 	public float Temperature { get; set; } = 0.7f;
 	public int MaxTokens { get; set; } = -1;
 	public uint? ContextSize { get; set; }
+	public int MaxPrompt { get; set; } = OcrSettings.Defaults.MaxPrompt;
+	public string CleanupPrompt { get; set; } = OcrSettings.Defaults.CleanupPrompt;
 
 	public static List<ProviderConfig> GetExamples() => new()
 	{

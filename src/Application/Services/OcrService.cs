@@ -98,9 +98,9 @@ public class OcrService: IOcrService
 		}
 
 		// Validate availability of cleanup prompt.
-		if (string.IsNullOrWhiteSpace(_settings.Settings.Ocr.CleanupPrompt))
+		if (string.IsNullOrWhiteSpace(config?.CleanupPrompt))
 		{
-			summary.Errors.Add("Prompt for OCR optimalization not configured. Please use one of the examples in tessa.settings.json.");
+			summary.Errors.Add($"Prompt for text cleanup not configured for '{config?.Name}'. Please use one of the examples in tessa.settings.json.");
 		}
 
 		return summary;

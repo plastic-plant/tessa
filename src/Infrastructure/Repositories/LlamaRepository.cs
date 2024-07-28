@@ -55,18 +55,18 @@ public class LlamaRepository: ILlamaRepository
 		};
 
 		var content = File.ReadAllText(file.FilePathResultOcr);
-		var parts = SplitTextInParts(content, _settings.Settings.Ocr.MaxPrompt);
+		var parts = SplitTextInParts(content, _config.MaxPrompt);
 		using var response = new StringWriter();
 		foreach (var part in parts)
 		{
-			var prompt = $"{_settings.Settings.Ocr.CleanupPrompt!}```{part}```";
+			var prompt = _config.CleanupPrompt!.Replace("<CONTENT>", part);
 			await foreach (var text in executor.InferAsync(prompt, parameters))
 			{
 				response.Write(text);
 			}
 		}
 
-		file.FilePathResultLlm = Path.Combine(_settings.Settings.Ocr.OutputPath, $"{file.FileNameWithoutExtension!}.llm.txt");
+		file.FilePathResultLlm = Path.Combine(_settings.Settings.Ocr.OutputPath, $"{file.FileNameWithoutExtension!}.prompt.txt");
 		File.WriteAllText(file.FilePathResultOcr, response.ToString());
 
 		return file;

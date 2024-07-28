@@ -1,0 +1,1 @@
+dotnet publish Tessa.sln --configuration Release

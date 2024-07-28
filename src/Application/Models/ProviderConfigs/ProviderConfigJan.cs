@@ -1,5 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Tessa.Application.Enums;
+using static Tessa.Application.Models.AppSettings;
 
 namespace Tessa.Application.Models.ProviderConfigs;
 

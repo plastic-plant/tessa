@@ -14,4 +14,6 @@ public interface IProviderConfig
     public float Temperature { get; set; }
     public int MaxTokens { get; set; }
     public uint? ContextSize { get; set; }
+	public int MaxPrompt { get; set; }
+	public string CleanupPrompt { get; set; }
 }

@@ -7,9 +7,7 @@
     "tessdata": "tessdata",
     "lang": "eng",
     "models": "models",
-    "llm": "none",
-    "maxPrompt": 200,
-    "cleanupPrompt": "Clean up text. Avoid confirmation messages in your response. If you can\u0027t provide an answer, leave the response empty. Answer in the language of given text. Here\u0027s the text:\n"
+    "llm": "none"
   },
   "llm": {
     "models": "models",
@@ -32,7 +30,9 @@
         "provider": "lmstudio",
         "temperature": 0.7,
         "maxTokens": 4096,
-        "contextSize": 16385
+        "contextSize": 16385,
+        "maxPrompt": 500,
+        "cleanupPrompt": "You are a model trained to correct text errors from OCR. Please correct the following text for any misrecognized characters, incorrect word splits, and grammatical errors.\n\nOriginal text:\n\n<CONTENT>\n\nCorrected text:\n\n"
       },
       {
         "host": "https://api.openai.com",

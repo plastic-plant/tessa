@@ -265,10 +265,11 @@ public class ConfigCommand : Command<ConfigCommand.Settings>
 	{
 		AnsiConsole.Clear();
 
-		var answer = AnsiConsole.Ask<string>("9. Change the cleanup strategy and [lightskyblue1]prompt to optimize[/] text readouts.\n\n[grey]Press Enter to save the current configured default: [/]", _settingsService.Settings.Ocr.CleanupPrompt);
+		var config = _settingsService.Settings.GetSelectedProviderConfiguration();
+		var answer = AnsiConsole.Ask<string>("9. Change the cleanup strategy and [lightskyblue1]prompt to optimize[/] text readouts.\n\n[grey]Press Enter to save the current configured default: [/]", AppSettings.OcrSettings.Defaults.CleanupPrompt);
 		if (!string.IsNullOrWhiteSpace(answer))
 		{
-			_settingsService.Settings.Ocr.CleanupPrompt = answer;
+			config.CleanupPrompt = answer;
 			_settingsService.SaveSettings();
 		}
 

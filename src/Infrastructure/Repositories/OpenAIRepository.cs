@@ -50,7 +50,7 @@ public class OpenAIRepository: IOpenAIRepository
 		}
 
 		var content = File.ReadAllText(file.FilePathResultOcr);
-		var parts = SplitTextInParts(content, _settings.Settings.Ocr.MaxPrompt);
+		var parts = SplitTextInParts(content, _config.MaxPrompt);
 		using var response = new StringWriter();
 		foreach (var part in parts)
 		{
@@ -61,7 +61,7 @@ public class OpenAIRepository: IOpenAIRepository
 					Model = _config.Model!,
 					Messages = new List<OpenAIMessage>
 					{
-						new OpenAIMessage { Role = OpenAICompletionRole.User, Content = $"{_settings.Settings.Ocr.CleanupPrompt!}\n```{part}```" }
+						new OpenAIMessage { Role = OpenAICompletionRole.User, Content = _config.CleanupPrompt!.Replace("<CONTENT>", part)}
 					},
 					Temperature = _config.Temperature,
 					MaxTokens = _config.MaxTokens,
@@ -97,7 +97,7 @@ public class OpenAIRepository: IOpenAIRepository
 			}
 		}
 
-		file.FilePathResultLlm = Path.Combine(_settings.Settings.Ocr.OutputPath, $"{file.FileNameWithoutExtension!}.llm.txt");
+		file.FilePathResultLlm = Path.Combine(_settings.Settings.Ocr.OutputPath, $"{file.FileNameWithoutExtension!}.prompt.txt");
 		File.WriteAllText(file.FilePathResultLlm, response.ToString());
 
 		return file;

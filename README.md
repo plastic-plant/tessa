@@ -8,9 +8,23 @@ This repository contains source code in C# for a small toolkit to read text from
 Run __Tessa__ over a folder with your documents and images in the `input` folder and observe results in the `output` folder. There are some example documents to get you started. By default, runs with Tesseract and English language. You can adapt for that, like I did for Dutch and German language.
 
 ```shell
-> tessa.exe ocr
 
+tessa.exe
+tessa.exe config
 
+tessa.exe ocr
+tessa.exe ocr --in file.png --out file.txt
+tessa.exe ocr --in "C:\path\to\your\folder"
+
+Progress:  10%   File 1: example-1.png
+Progress:  30%   File 2: example-2.png
+Progress:  50%   File 3: example-3.pdf
+Progress:  60%   File 3: example-3.pdf
+Progress:  70%   File 4: example-4.pdf
+Progress: 100%   File 5: example-5.jpg
+```
+---
+```
 Tessa
 │
 ├───input
@@ -31,30 +45,13 @@ Tessa
 │       florence-2
 │
 └───ouput
-        FileRepository.cs
-        LlamaRepository.cs
-        OpenAIRepository.cs
-        TesseractRepository.cs
-
-
+        example-1.ocr.txt
+        example-1.prompt.txt
+        ...
 ```
+
 
 Defaults don't require additional downloads, but you can configure and retrieve lexicons and models of choice with `tessa config` and `tessa download`, then run again to verify if quality improves. A quick override for the folder locations, model and language is available with command-line options too.
-
-```shell
-tessa.exe
-tessa.exe config
-
-tessa.exe ocr --in file.png --out file.txt
-tessa.exe ocr --in "C:\path\to\your\folder" --model "t5-base"
-
-Progress:  10%   File 1: example-1.png
-Progress:  30%   File 2: example-2.png
-Progress:  50%   File 3: example-3.pdf
-Progress:  60%   File 3: example-3.pdf
-Progress:  70%   File 4: example-4.pdf
-Progress: 100%   File 5: example-5.jpg
-```
 
 
 ## Use case
@@ -63,11 +60,14 @@ Processing an archive of documents covering 10.000 pages of printed and handwrit
 
 Instead of putting a lot of time pre-processing input up front, I tried out a couple of LLM models to improve the quality of the output as post-processing. Using the extracted text for keyword and subject search, I'm most interested in the context of the text over a clean extraction. Large language models are excellent for this. Please have a look at this tool. Running some tests with vision models and for OCR and LLM prompting did do wonders for my results and might be helpful to you too.
  
-## Implementation
-
 
 ## Features
 
+- Read text from images and PDF-documents with Tesseract OCR and Florence-2 OCR.
+- Clean up text by prompting large language models.
+- Download Tesseract languages, Florence models and LLM weights as needed.
+- Plug in models from Hugging Face through OpenAI API (LM studio, Jan.ai, etc.)
+- Configure appsettings in menu, JSON file and override with command-line options.
 
 ## Background
 
@@ -79,6 +79,8 @@ Starting out as a wrapper around Tesseract OCR and LLMs to improve reading text 
 
 
 ## Installation
+
+Download the repository and build the project in Visual Studio. I dropped builds for Windows and Linux in `Releases`, but you should consider this project mostly as a continuous effort trying out models and techniques than a shrinkwrapped release.
 
 
 ## Usage
